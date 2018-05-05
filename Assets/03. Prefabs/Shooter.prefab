@@ -96,6 +96,7 @@ MonoBehaviour:
   patrolEdgeRangeY: 0.05
   bulletPrefab: {fileID: 1774897074528660, guid: 2fa4867e2b5f04073b1bf367191d6b9e,
     type: 2}
+  DieEffect: {fileID: 1475765197828686, guid: ec93efdfa70874b01bff16ed6225f629, type: 2}
 --- !u!212 &212225231167265180
 SpriteRenderer:
   m_ObjectHideFlags: 1
