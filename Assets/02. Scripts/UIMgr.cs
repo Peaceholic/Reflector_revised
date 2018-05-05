@@ -4,48 +4,47 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIMgr : MonoBehaviour {
-
-	public Text scoreText; //ScroeText
-	private int score = 0; //inital score
-
-	// Use this for initialization
-	void Start () {
-
-		AddScore(0); //initialize score
-		StartCoroutine(TimerScore());
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-
-	}
-
-	// Add value to score
-	void AddScore(int value) {
-
-		score += value;
-		scoreText.text = score.ToString(); //set new value
-
-	}
-
-	// Score added by 1 every 1 seconds
-	IEnumerator TimerScore() {
-
-		while(true) {
-
-			yield return new WaitForSeconds(1.0f);
-			AddScore(1);
-			
+	private UIMgr instance;
+	public UIMgr Instance{
+		get{
+			if(instance != null){
+				return instance;
+			}
+			else{
+				instance = FindObjectOfType<UIMgr>();
+				return instance;
+			}
 		}
-
 	}
 
-	public void OnClickPauseBtn() {
+	public Text scoreText;
+	public Text vitalityText;
+	public Image reflectorGauge;
 
-		
+	void Awake()
+	{
+		if(instance == null){
+			instance = this;
+		}
+		else{
+			Destroy(gameObject);
+		}
+	}
 
+	public void ChangeScoreTo(int value) {
+		scoreText.text = value.ToString();
+	}
+
+	public void ChangeVitalityTextTo(string text, Color color){
+		vitalityText.text = text;
+		vitalityText.color = color;
+	}
+
+	public void ChangeGaugeFillAmountTo(float amount){
+		reflectorGauge.fillAmount = amount;
+	}
+
+	public void OnClickPauseButton() {	
 		
 	}
 }
