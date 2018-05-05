@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212535002818919416}
   - component: {fileID: 50509752753813718}
   - component: {fileID: 58906968278402106}
+  - component: {fileID: 114393794940054232}
   m_Layer: 0
   m_Name: Character_attack_1_0
   m_TagString: Bullet
@@ -77,6 +78,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.68
+--- !u!114 &114393794940054232
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1341653294602880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3bb7a15e71249bc95e56abb16c28b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DieEffect: {fileID: 1475765197828686, guid: ec93efdfa70874b01bff16ed6225f629, type: 2}
 --- !u!212 &212535002818919416
 SpriteRenderer:
   m_ObjectHideFlags: 1

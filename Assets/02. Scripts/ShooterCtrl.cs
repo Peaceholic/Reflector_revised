@@ -13,7 +13,6 @@ public class ShooterCtrl : MonoBehaviour {
     public float patrolEdgeRangeX = 0.1f;
     public float patrolEdgeRangeY = 0.05f;
 	public GameObject bulletPrefab;
-    public GameObject DieEffect;
 
     private bool isDie = false;
     private Vector2 moveDirection;
@@ -65,14 +64,6 @@ public class ShooterCtrl : MonoBehaviour {
         moveDirection.Normalize();
 
     }
-
-    void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log("check");
-		if(other.gameObject.tag == "Bullet") {
-			Destroy(this.gameObject);
-			Instantiate(DieEffect, this.transform.position, Quaternion.identity);
-		}
-	}
 
     IEnumerator Move(){
         while(!isDie){
