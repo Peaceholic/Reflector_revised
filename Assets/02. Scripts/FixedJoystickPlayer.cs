@@ -20,6 +20,9 @@ public class FixedJoystickPlayer : JoystickPlayer {
     }
 
     public override void OnDrag(PointerEventData eventData) {
+        if(firstTouch) {
+            SetCurrentTouchToZero(eventData);
+        }
         Vector2 direction = (eventData.position - joystickPosition) * magnitudeMultiplier;
         inputVector = (direction.magnitude > background.sizeDelta.x / 2f) ? direction.normalized : direction / (background.sizeDelta.x / 2f);
         handle.anchoredPosition = (inputVector * background.sizeDelta.x / 2f) * handleLimit;
