@@ -72,6 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shooterPrefab: {fileID: 1311881030310864, guid: ee59deaebfd9e4fbb94e5901cee57756,
     type: 2}
+  _shooterSpawnEffect: {fileID: 1352609905043420}
 --- !u!212 &212986656705661186
 SpriteRenderer:
   m_ObjectHideFlags: 1
