@@ -70,7 +70,7 @@ public class ShieldCtrl : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0, 0, rotDeg);
 	}
 	
-	void OnTriggerEnter2D(Collision2D coll) {
+	void OnTriggerEnter2D(Collider2D coll) {
 		if(coll.gameObject.CompareTag("Enemy")) {
 			Destroy(coll.gameObject);
 		}
