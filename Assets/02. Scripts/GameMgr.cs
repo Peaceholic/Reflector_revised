@@ -3,21 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameMgr : MonoBehaviour {
+	private GameMgr instance;
+	public GameMgr Instance{
+		get{
+			return instance;
+		}
+	}
+	public float spawnTime = 7;
 
-	public int spawnTime = 7;
+	private MonsterSpawner monSpawner;
 
-	private ShooterSpawnEffect shooterSpawn;
+	void Awake(){
+		if(instance == null){
+			instance = this;
+		}
+		else{
+			Destroy(gameObject);
+		}
+	}
 
 	// Use this for initialization
 	void Start () {
-		shooterSpawn = GetComponent<ShooterSpawnEffect>();
+		monSpawner = GetComponent<MonsterSpawner>();
 		StartCoroutine(StartSpawn());
 	}
 	
 	IEnumerator StartSpawn() {
 		
 		while(true) {
-			shooterSpawn.RandomSpawn();
+			monSpawner.SpawnMonster();
 
 			yield return new WaitForSeconds(spawnTime);
 		}
