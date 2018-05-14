@@ -13,6 +13,7 @@ public class ShooterCtrl : MonoBehaviour {
     public float patrolEdgeRangeX = 0.1f;
     public float patrolEdgeRangeY = 0.05f;
 	public GameObject bulletPrefab;
+
     private bool isDie = false;
     private Vector2 moveDirection;
     private EDirection direction;
