@@ -4,9 +4,29 @@ using UnityEngine;
 
 public class PlayerCtrl : MonoBehaviour {
 	private int currentHealth;
+	private float currentEnergy; // Energy will be used for filling gauge
+	public float CurrentEnergy{
+		get{
+			return currentEnergy;
+		}
+		set{
+			
+			if(currentEnergy > value){
+				currentEnergy = maxEnergy;
+			}
+			else{
+				currentEnergy = value;
+			}
+			
+			UIMgr.Instance.ChangeGaugeFillAmountTo(currentEnergy / maxEnergy);
+		}
+	}
+
 	public int maxHealth = 2;
+	public float maxEnergy = 3;
 
 	public float moveSpeed = 5.0f;
+	public float fillEnergyAmount = 0.1f;
 
 	private JoystickPlayer joystick;
 
