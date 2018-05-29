@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a947f694f1c4a47b8aab4616f9a7cfcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTime: 7
+  spawnTime: 1
 --- !u!4 &1106460576
 Transform:
   m_ObjectHideFlags: 0
@@ -325,6 +325,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shooterPrefab: {fileID: 1352609905043420, guid: 3af74882f9a47461e88dd6c5b434fd5b,
+    type: 2}
+  chargerPrefab: {fileID: 1134057700193030, guid: 061831de46dc847be8b874096554bb2b,
     type: 2}
 --- !u!1 &1163011012
 GameObject:
