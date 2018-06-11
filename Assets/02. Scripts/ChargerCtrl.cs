@@ -14,13 +14,13 @@ public class ChargerCtrl : MonoBehaviour {
 
 	public float currentSpeed = 5.0f;
     public float attackSpeed = 7.0f;
-    public float checkFrequency = 0.2f;
+    public float checkFrequency = 0.1f;
     public float patrolFrequency = 2f;
 	
 	public MonsterState currentState = MonsterState.Idle;
 
 	// attack radius of the monster
-	public float attackDist = 10.0f;
+	public float attackDist = 4.0f;
     public float patrolDist = 3f;
 
 	private bool isDie = false;
@@ -44,9 +44,11 @@ public class ChargerCtrl : MonoBehaviour {
         currentPatrolTime = patrolFrequency;
 	}
 
-    private  void OnTriggerEnter2D(Collider2D coll)
+    private void OnTriggerEnter2D(Collider2D coll)
     {
-        Destroy(gameObject);
+        if(coll.gameObject.tag == "Charger") {
+            Destroy(gameObject);
+        }
     }
 
 	// Check current state every designated time

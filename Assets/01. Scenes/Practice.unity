@@ -912,7 +912,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 2
+  maxEnergy: 3
   moveSpeed: 5
+  fillEnergyAmount: 0.1
 --- !u!70 &1593026425
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
