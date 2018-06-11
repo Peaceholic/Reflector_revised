@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UIMgr : MonoBehaviour {
-	private UIMgr instance;
-	public UIMgr Instance{
+	private static UIMgr instance;
+	public static UIMgr Instance{
 		get{
 			if(instance != null){
 				return instance;

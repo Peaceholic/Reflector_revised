@@ -12,12 +12,14 @@ public class ShieldCtrl : MonoBehaviour {
 	private float mouseY;
 	private const float distance = 1.7f;
 	private JoystickShield joystick;
+	private PlayerCtrl player;
 
 	// Use this for initialization
 	void Start () {
 		// get parent's transform component
 		parentTr = this.transform.parent.parent;
 		joystick = FindObjectOfType<JoystickShield>();
+		player = GetComponentInParent<PlayerCtrl>();
 	}
 	
 	// Update is called once per frame
@@ -71,8 +73,10 @@ public class ShieldCtrl : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter2D(Collider2D coll) {
-		if(coll.gameObject.CompareTag("Enemy")) {
+		if(coll.gameObject.CompareTag("EnemyBullet")) {
+			player.CurrentEnergy += player.fillEnergyAmount;
 			Destroy(coll.gameObject);
 		}
 	}
+
 }
