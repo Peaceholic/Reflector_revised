@@ -11,7 +11,7 @@ public class PlayerCtrl : MonoBehaviour {
 		}
 		set{
 			
-			if(currentEnergy > value){
+			if(currentEnergy > maxEnergy){
 				currentEnergy = maxEnergy;
 			}
 			else{
