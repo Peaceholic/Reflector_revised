@@ -27,11 +27,14 @@ public class PlayerCtrl : MonoBehaviour {
 		}
 	}
 
+	[HideInInspector]
+	public bool isDead;
 	public int maxHealth = 2;
 	public float maxEnergy = 3;
 
 	public float moveSpeed = 5.0f;
 	public float fillEnergyAmount = 0.1f;
+	public GameObject deathEffect;
 
 	private JoystickPlayer joystick;
 
@@ -65,6 +68,7 @@ public class PlayerCtrl : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) {
 		if(other.gameObject.CompareTag("EnemyBullet")) {
+		if(other.gameObject.CompareTag("EnemyBullet") && !isDead) {
 			ReceiveDamage(1);
 		}
 	}
@@ -117,5 +121,10 @@ public class PlayerCtrl : MonoBehaviour {
 
 	void Die(){
 		// Player death
+		//Player death
+		isDead = true;
+		Instantiate(deathEffect, transform.position, Quaternion.identity);
+
+		Destroy(gameObject);
 	}
 }
