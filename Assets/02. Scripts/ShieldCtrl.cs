@@ -7,8 +7,7 @@ public class ShieldCtrl : MonoBehaviour {
 
     public float movSpeed = 20.0f;
 	public float attackSpeed = 20.0f;
-	public GameObject bulletPrefab;
-	public GameObject DieEffect;
+	public GameObject[] bulletPrefab;
 	
 	private Transform parentTr;
 	private float mouseX;
@@ -86,17 +85,17 @@ public class ShieldCtrl : MonoBehaviour {
 			
 			switch(energy){
 				case 1:
-				bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+				bulletObject = Instantiate(bulletPrefab[0], transform.position, Quaternion.identity);
 				player.CurrentEnergy -= 1;
 				break;
 
 				case 2:
-				bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+				bulletObject = Instantiate(bulletPrefab[1], transform.position, Quaternion.identity);
 				player.CurrentEnergy -= 2;
 				break;
 
 				case 3:
-				bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+				bulletObject = Instantiate(bulletPrefab[2], transform.position, Quaternion.identity);
 				player.CurrentEnergy -= 3;
 				break;
 
