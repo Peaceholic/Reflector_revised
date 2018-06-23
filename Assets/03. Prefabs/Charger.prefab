@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212826501245177968}
   - component: {fileID: 58933791639076736}
   - component: {fileID: 50898158543084294}
-  - component: {fileID: 114721961718162550}
+  - component: {fileID: 114542476434940082}
   m_Layer: 0
   m_Name: Charger
   m_TagString: Charger
@@ -78,7 +78,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &114721961718162550
+--- !u!114 &114542476434940082
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -94,8 +94,10 @@ MonoBehaviour:
   checkFrequency: 0.1
   patrolFrequency: 2
   currentState: 0
-  attackDist: 4
+  sp: {fileID: 21300002, guid: 82300fce3b3058b40976e33e24ba7f57, type: 3}
+  attackDist: 10
   patrolDist: 3
+  checkTime: 0.5
 --- !u!212 &212826501245177968
 SpriteRenderer:
   m_ObjectHideFlags: 1

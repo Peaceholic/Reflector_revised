@@ -9,7 +9,7 @@ public class GameMgr : MonoBehaviour {
 			return instance;
 		}
 	}
-	public float spawnTime = 7;
+	public float spawnTime = 7.0f;
 
 	private MonsterSpawner monSpawner;
 

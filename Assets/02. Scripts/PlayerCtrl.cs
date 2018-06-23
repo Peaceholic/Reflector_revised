@@ -5,6 +5,11 @@ using UnityEngine;
 public class PlayerCtrl : MonoBehaviour {
 	private int currentHealth;
 	private float currentEnergy; // Energy will be used for filling gauge
+	private float curX;
+	private float prevX;
+
+	private SpriteRenderer spriteRenderer;
+
 	public float CurrentEnergy{
 		get{
 			return currentEnergy;
@@ -34,11 +39,28 @@ public class PlayerCtrl : MonoBehaviour {
 	{
 		joystick = FindObjectOfType<JoystickPlayer>();
 		ResetStatus();
+
+		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+		prevX = transform.position.x;
+	}
+
+	void DoFlip() {
+		curX = transform.position.x;
+		float dir = curX - prevX;
+		if(dir < 0) {
+			spriteRenderer.flipX = true;
+		} else if(dir > 0) {
+			spriteRenderer.flipX = false;
+		} else {
+			// Do nothing
+		}
+		prevX = curX;
 	}
 
 	void Update()
 	{
 		Move();
+		DoFlip();
 	}
 
     void OnTriggerEnter2D(Collider2D other) {
@@ -48,8 +70,24 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 	void Move() {
 		Vector2 moveDir = new Vector2(joystick.Horizontal, joystick.Vertical);
+		Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
+
+		if(pos.x < 0 && moveDir.x < 0) {
+			moveDir.x = 0;
+		}
+		if(pos.x > Screen.width && moveDir.x > 0) {
+			moveDir.x = 0;
+		}
+		if(pos.y < 0 && moveDir.y < 0) {
+			moveDir.y = 0;
+		}
+		if(pos.y > Screen.height && moveDir.y > 0) {
+			moveDir.y = 0;
+		}
 
 		transform.Translate(moveDir * Time.deltaTime * moveSpeed, Space.Self);
+		
+		
         /*
         horizontal = Input.GetAxisRaw("Horizontal");
 		vertical = Input.GetAxisRaw("Vertical");
@@ -71,6 +109,6 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	void Die(){
-		//Player death
+		// Player death
 	}
 }

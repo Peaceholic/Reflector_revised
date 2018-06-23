@@ -13,12 +13,14 @@ public class ShooterCtrl : MonoBehaviour {
     public float patrolEdgeRangeX = 0.1f;
     public float patrolEdgeRangeY = 0.05f;
 	public GameObject bulletPrefab;
+    public float checkTime = 0.5f;
 
     private bool isDie = false;
     private Vector2 moveDirection;
     private EDirection direction;
 
 	private Transform playerTr;
+
 	// Use this for initialization
 	void Start () {
 		playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
@@ -95,6 +97,8 @@ public class ShooterCtrl : MonoBehaviour {
             Vector2 attackDir = playerTr.position - transform.position;
             attackDir.Normalize();
             bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * attackSpeed;
+
+            Destroy(bulletObject, 8); // May erase after optimization
             yield return new WaitForSeconds(attackFrequency);
         }
     }
