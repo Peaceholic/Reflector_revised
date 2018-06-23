@@ -6,6 +6,8 @@ using UnityEngine;
 public class ShieldCtrl : MonoBehaviour {
 
     public float movSpeed = 20.0f;
+	public float attackSpeed = 20.0f;
+	public GameObject[] bulletPrefab;
 	
 	private Transform parentTr;
 	private float mouseX;
@@ -13,6 +15,9 @@ public class ShieldCtrl : MonoBehaviour {
 	private const float distance = 1.7f;
 	private JoystickShield joystick;
 	private PlayerCtrl player;
+
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -70,6 +75,38 @@ public class ShieldCtrl : MonoBehaviour {
         Vector2 dirVec = (Vector2)(transform.position - parentTr.position);
         float rotDeg = Mathf.Atan2(dirVec.y, dirVec.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotDeg);
+	}
+
+	public void Attack(){
+		if(player.CurrentEnergy >= player.maxEnergy / 3){
+			int energy = (int)player.CurrentEnergy;
+			
+			GameObject bulletObject;
+			
+			switch(energy){
+				case 1:
+				bulletObject = Instantiate(bulletPrefab[0], transform.position, Quaternion.identity);
+				player.CurrentEnergy -= 1;
+				break;
+
+				case 2:
+				bulletObject = Instantiate(bulletPrefab[1], transform.position, Quaternion.identity);
+				player.CurrentEnergy -= 2;
+				break;
+
+				case 3:
+				bulletObject = Instantiate(bulletPrefab[2], transform.position, Quaternion.identity);
+				player.CurrentEnergy -= 3;
+				break;
+
+				default:
+				return;
+			}
+			Vector2 attackDir = -(transform.parent.parent.position - transform.position);
+			attackDir.Normalize();
+			bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * attackSpeed;
+		}
+		
 	}
 	
 	void OnTriggerEnter2D(Collider2D coll) {

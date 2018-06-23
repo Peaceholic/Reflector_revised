@@ -652,11 +652,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1193375968}
-  bulletPrefab: {fileID: 1341653294602880, guid: afcb9535f280341f69046e215e04704c,
-    type: 2}
-  shield: {fileID: 1739238016}
-  DieEffect: {fileID: 0}
-  attackSpeed: 20
 --- !u!4 &1331822498 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4923602673780036, guid: 57b5f059d44a88d40b7f9e75de0fa29b,
@@ -1324,6 +1319,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movSpeed: 20
+  attackSpeed: 20
+  bulletPrefab:
+  - {fileID: 1341653294602880, guid: afcb9535f280341f69046e215e04704c, type: 2}
+  - {fileID: 1298870192831842, guid: 953e0412cecf54164b714326f903a4dc, type: 2}
+  - {fileID: 1267059312529118, guid: 1ade25333170c4681bc93a6bb612ac3e, type: 2}
 --- !u!1 &1850538421
 GameObject:
   m_ObjectHideFlags: 0
