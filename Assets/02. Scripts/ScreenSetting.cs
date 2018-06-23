@@ -7,6 +7,6 @@ public class ScreenSetting : MonoBehaviour {
 	void Awake()
 	{
 		Screen.orientation = ScreenOrientation.Landscape;
-		Screen.SetResolution(Screen.width, Screen.width * 10 / 16, true);
+		Screen.SetResolution(Screen.height * 10 / 16, Screen.height, true);
 	}
 }
