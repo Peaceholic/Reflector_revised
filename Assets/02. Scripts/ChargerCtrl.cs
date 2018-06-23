@@ -18,10 +18,12 @@ public class ChargerCtrl : MonoBehaviour {
     public float patrolFrequency = 2f;
 	
 	public MonsterState currentState = MonsterState.Idle;
+    public Sprite sp;
 
 	// attack radius of the monster
-	public float attackDist = 4.0f;
-    public float patrolDist = 3f;
+    public float attackDist = 10.0f;
+    public float patrolDist = 3.0f;
+    public float checkTime = 0.5f;
 
 	private bool isDie = false;
     private bool isArrived = false;
@@ -29,20 +31,44 @@ public class ChargerCtrl : MonoBehaviour {
     float currentPatrolTime;
     // Used when move state
     private Vector2 moveDestination;
-
+    private SpriteRenderer spriteRenderer;
 	private Transform playerTr;
+
+    private float prevX;
+    private float curX;
 
     // Use this for initialization
     private void Start () {
 
 		playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
 		// Starting to pursue player
 		StartCoroutine(this.CheckState());
 		StartCoroutine(this.DoAction());
-        currentState = MonsterState.Patrol;
+        currentState = MonsterState.Move;
         currentPatrolTime = patrolFrequency;
+
+        prevX = transform.position.x;
+
 	}
+
+    void DoFlip() {
+		curX = transform.position.x;
+		float dir = curX - prevX;
+		if(dir > 0) {
+			spriteRenderer.flipX = true;
+		} else if(dir < 0) {
+			spriteRenderer.flipX = false;
+		} else {
+			// do Nothing
+		}
+		prevX = curX;
+	}
+
+    void Update() {
+        DoFlip();
+    }
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
@@ -62,11 +88,16 @@ public class ChargerCtrl : MonoBehaviour {
                     break;
                 case MonsterState.Move:
                     yield return new WaitUntil(() => (isArrived == true));
-                    currentState = MonsterState.Idle;
+                    currentState = MonsterState.Patrol;
                     break;
                 case MonsterState.Patrol:
-                    float playerDist = (playerTr.position - transform.position).sqrMagnitude;
-                    if(playerDist < attackDist * attackDist)
+                    Vector3 playerDist = playerTr.position - transform.position;
+                    const float recogDistX = 2.0f;
+                    const float recogDistY = 1.0f;
+
+                    Vector2 dist = new Vector2(Mathf.Pow(playerDist.x, 2) / Mathf.Pow(recogDistX, 2), Mathf.Pow(playerDist.y, 2) / Mathf.Pow(recogDistY, 2));
+
+                    if(dist.sqrMagnitude < attackDist * attackDist)
                     {
                         currentState = MonsterState.Attack;
                     }
@@ -120,8 +151,12 @@ public class ChargerCtrl : MonoBehaviour {
 
     private  void ActMove()
     {
-        MoveTo(moveDestination);
-        isArrived = ((Vector2)transform.position - moveDestination).sqrMagnitude < 0.1;
+        MoveTo(playerTr.position);
+        Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
+        if((pos.x >= 0 && pos.x <= Screen.width) && (pos.y >= 0 && pos.y <= Screen.height)) {
+            isArrived = true;
+        }
+
     }
 
     private  void ActChase()
@@ -163,9 +198,24 @@ public class ChargerCtrl : MonoBehaviour {
         }
     }
 
+    IEnumerator DestroyOnOutOfScreen() {
+        while(true) {
+            Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
+
+            if(pos.x > Screen.width || pos.y > Screen.height || pos.x < 0 || pos.y < 0) {
+                yield return new WaitForSecondsRealtime(checkTime); // Wait for charger to completely disappear
+                Die();
+            }
+
+            yield return new WaitForSecondsRealtime(checkTime);
+        }
+    }
+
     private  void ActAttack()
     {
+        spriteRenderer.sprite = sp;
         transform.Translate(moveDestination.normalized * attackSpeed * Time.deltaTime);
+        StartCoroutine(DestroyOnOutOfScreen());
     }
 
     private  void MoveTo(Vector2 dest)
