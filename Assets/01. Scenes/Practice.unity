@@ -378,7 +378,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnTime: 1
-  scoreValue: 0
 --- !u!4 &1106460576
 Transform:
   m_ObjectHideFlags: 0
@@ -1613,5 +1612,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1094802762}
-  vitalityText: {fileID: 0}
-  reflectorGauge: {fileID: 0}
+  vitalityText: {fileID: 1850538423}
+  reflectorGauge: {fileID: 1385760991}

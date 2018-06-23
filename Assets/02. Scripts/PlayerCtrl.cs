@@ -67,11 +67,11 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D other) {
-		if(other.gameObject.CompareTag("EnemyBullet")) {
 		if(other.gameObject.CompareTag("EnemyBullet") && !isDead) {
 			ReceiveDamage(1);
 		}
 	}
+	
 	void Move() {
 		Vector2 moveDir = new Vector2(joystick.Horizontal, joystick.Vertical);
 		Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
