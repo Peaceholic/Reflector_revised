@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnTime: 1
+  scoreValue: 0
 --- !u!4 &1106460576
 Transform:
   m_ObjectHideFlags: 0
@@ -906,10 +907,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b757349933c40499ea791776cfaf7a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
   maxHealth: 2
   maxEnergy: 3
   moveSpeed: 5
   fillEnergyAmount: 0.1
+  deathEffect: {fileID: 1137059722296254, guid: 4c955574ba9f74b9a95e0c60128d0c62,
+    type: 2}
 --- !u!70 &1593026425
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1520,5 +1524,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1094802762}
-  vitalityText: {fileID: 1850538423}
-  reflectorGauge: {fileID: 1385760991}
+  vitalityText: {fileID: 0}
+  reflectorGauge: {fileID: 0}
