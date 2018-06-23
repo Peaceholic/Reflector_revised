@@ -3,14 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameMgr : MonoBehaviour {
-	private GameMgr instance;
-	public GameMgr Instance{
+	private static GameMgr instance;
+	public static GameMgr Instance{
 		get{
 			return instance;
 		}
 	}
 	public float spawnTime = 7;
-	public int scoreValue = 0;
+	private int currentScore = 0;
+	public int CurrentScore{
+		get{
+			return currentScore;
+		}
+		set{
+			currentScore = value;
+			UIMgr.Instance.ChangeScoreTo(currentScore);
+		}
+	}
 
 	private MonsterSpawner monSpawner;
 
@@ -35,9 +44,7 @@ public class GameMgr : MonoBehaviour {
 
 		while(true) {
 
-			++scoreValue;
-
-			UIMgr.Instance.ChangeScoreTo(scoreValue);
+			++CurrentScore;
 
 			yield return new WaitForSeconds(0.1f);
 

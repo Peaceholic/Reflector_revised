@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 1106460576}
   - component: {fileID: 1106460575}
   - component: {fileID: 1106460577}
+  - component: {fileID: 1106460578}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -328,6 +329,17 @@ MonoBehaviour:
     type: 2}
   chargerPrefab: {fileID: 1134057700193030, guid: 061831de46dc847be8b874096554bb2b,
     type: 2}
+--- !u!114 &1106460578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1106460574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0664006976c14421811a47c1b4dfc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1163011012
 GameObject:
   m_ObjectHideFlags: 0
