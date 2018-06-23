@@ -65,7 +65,14 @@ public class PlayerCtrl : MonoBehaviour {
 
 	void ReceiveDamage(int amount){
 		currentHealth -= 1;
-		if(currentHealth <= 0){
+		if(currentHealth >= maxHealth){
+			UIMgr.Instance.ChangeVitalityTextTo("NORMAL", Color.white);
+		}
+		else if(currentHealth == 1){
+			UIMgr.Instance.ChangeVitalityTextTo("FATAL", Color.red);
+		}
+		else if(currentHealth <= 0){
+			UIMgr.Instance.ChangeVitalityTextTo("DEAD", Color.red);
 			Die();
 		}
 	}
