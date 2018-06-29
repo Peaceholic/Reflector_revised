@@ -19,7 +19,7 @@ public class UIBlink : MonoBehaviour {
 		while(true){
 			uiGraphic.CrossFadeAlpha(0, duration, true);
 			yield return new WaitForSecondsRealtime(duration);
-			Debug.Log(uiGraphic.color);
+
 			uiGraphic.CrossFadeAlpha(1, duration, true);
 			yield return new WaitForSecondsRealtime(duration);
 		}

@@ -17,13 +17,10 @@ public class UIMgr : MonoBehaviour {
 		}
 	}
 
-	public GameObject startUI;
+	public GameObject titleUI;
 	public GameObject pauseUI;
 	public GameObject gameOverUI;
-	public GameObject gameCanvas;
-	public GameObject menuEvent;
-	public GameObject gameEvent;
-	public GameObject player;
+	public GameObject playingUI;
 	public GameObject gameManager;
 
 	public Text scoreText;
@@ -54,19 +51,19 @@ public class UIMgr : MonoBehaviour {
 		reflectorGauge.fillAmount = amount;
 	}
 
-	public void OnClickTouchButton() {
+	public void OnClickTransparentBackground() {
 
-		if (GameMgr.Instance.Gamemode == GameModes.start) {
+		if (GameMgr.Instance.Gamemode == GameModes.Title) {
 
-			GameMgr.Instance.Gamemode = GameModes.play;
+			GameMgr.Instance.Gamemode = GameModes.Playing;
 
-		} else if (GameMgr.Instance.Gamemode == GameModes.pause) {
+		} else if (GameMgr.Instance.Gamemode == GameModes.Paused) {
 
-			GameMgr.Instance.Gamemode = GameModes.play;
+			GameMgr.Instance.Gamemode = GameModes.Playing;
 
-		} else if (GameMgr.Instance.Gamemode == GameModes.gameover) {
+		} else if (GameMgr.Instance.Gamemode == GameModes.GameOver) {
 
-			GameMgr.Instance.Gamemode = GameModes.start;
+			GameMgr.Instance.Gamemode = GameModes.Title;
 
 		}
 
@@ -74,59 +71,48 @@ public class UIMgr : MonoBehaviour {
 
 	public void OnClickPauseButton() {
 
-		GameMgr.Instance.Gamemode = GameModes.pause;
+		GameMgr.Instance.Gamemode = GameModes.Paused;
 
 	}
 
 	public void StartUI() { 
 
-		startUI.SetActive(true);
+		titleUI.SetActive(true);
 		pauseUI.SetActive(false);
 		gameOverUI.SetActive(false);
-		menuEvent.SetActive(true);
 
-		player.SetActive(false);
-		gameCanvas.SetActive(false);
-		gameEvent.SetActive(false);
+
+		playingUI.SetActive(false);
 
 	}
 
 	public void PlayUI() {
 
-		startUI.SetActive(false);
+		titleUI.SetActive(false);
 		pauseUI.SetActive(false);
 		gameOverUI.SetActive(false);
-		menuEvent.SetActive(false);
 
-		player.SetActive(true);
-		gameCanvas.SetActive(true);
-		gameEvent.SetActive(true);
+		playingUI.SetActive(true);
 
 	}
 
 	public void PauseUI() {
 
-		startUI.SetActive(false);
+		titleUI.SetActive(false);
 		pauseUI.SetActive(true);
 		gameOverUI.SetActive(false);
-		menuEvent.SetActive(true);
 
-		player.SetActive(false);
-		gameCanvas.SetActive(false);
-		gameEvent.SetActive(false);
+		playingUI.SetActive(false);
 
 	}
 
 	public void GameOverUI() {
 
-		startUI.SetActive(false);
+		titleUI.SetActive(false);
 		pauseUI.SetActive(false);
 		gameOverUI.SetActive(true);
-		menuEvent.SetActive(true);
 
-		player.SetActive(false);
-		gameCanvas.SetActive(false);
-		gameEvent.SetActive(false);
+		playingUI.SetActive(false);
 
 	}
 

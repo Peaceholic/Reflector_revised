@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameModes {start, play, pause, gameover};
+public enum GameModes {Title, Playing, Paused, GameOver};
 
 public class GameMgr : MonoBehaviour {
 	private static GameMgr instance;
@@ -18,30 +18,37 @@ public class GameMgr : MonoBehaviour {
 			return gamemode;
 		}
 		set{
+			var prevGamemode = gamemode;
 			gamemode = value;
 			switch(gamemode){
-				case GameModes.start:
+				case GameModes.Title:
 
 					UIMgr.Instance.StartUI();
-
+					player.SetActive(false);
 					break;
 
-				case GameModes.play:
+				case GameModes.Playing:
 
 					UIMgr.Instance.PlayUI();
+					player.SetActive(true);
 
+					if(prevGamemode == GameModes.Title){
+						StartCoroutine(StartSpawn());
+					}
+
+					StartCoroutine(StartScore());
 					break;
 
-				case GameModes.pause:
+				case GameModes.Paused:
 
 					UIMgr.Instance.PauseUI();
-
+					player.SetActive(false);
 					break;
 
-				case GameModes.gameover:
+				case GameModes.GameOver:
 
 					UIMgr.Instance.GameOverUI();
-
+					player.SetActive(false);
 					break;
 			}
 		}
@@ -58,6 +65,8 @@ public class GameMgr : MonoBehaviour {
 		}
 	}
 
+	public GameObject player;
+
 	private MonsterSpawner monSpawner;
 
 	void Awake(){
@@ -73,16 +82,14 @@ public class GameMgr : MonoBehaviour {
 	void Start () {
 		monSpawner = GetComponent<MonsterSpawner>();
 
-		GameMgr.Instance.Gamemode = GameModes.start;
+		GameMgr.Instance.Gamemode = GameModes.Title;
 
-		StartCoroutine(StartScore());
-		StartCoroutine(StartSpawn());
 	}
 
 	// normal score increase
 	IEnumerator StartScore() {
 
-		while(true && gamemode == GameModes.play) {
+		while(gamemode == GameModes.Playing) {
 
 			++CurrentScore;
 
@@ -93,11 +100,17 @@ public class GameMgr : MonoBehaviour {
 	}
 	
 	IEnumerator StartSpawn() {
-		
-		while(true && gamemode == GameModes.play) {
-			monSpawner.SpawnMonster();
 
-			yield return new WaitForSeconds(spawnTime);
+		while(true) {
+			if(gamemode == GameModes.Playing){
+				monSpawner.SpawnMonster();
+
+				yield return new WaitForSeconds(spawnTime);
+			}
+			else if(gamemode == GameModes.Paused){
+				yield return new WaitUntil(()=>gamemode == GameModes.Playing);
+			}
+
 		}
 	}
 
