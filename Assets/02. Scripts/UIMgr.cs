@@ -86,6 +86,8 @@ public class UIMgr : MonoBehaviour {
 
 		playingUI.SetActive(false);
 
+		Time.timeScale = 1;
+
 	}
 
 	public void PlayUI() {
@@ -96,6 +98,7 @@ public class UIMgr : MonoBehaviour {
 
 		playingUI.SetActive(true);
 
+		Time.timeScale = 1;
 	}
 
 	public void PauseUI() {
@@ -105,6 +108,8 @@ public class UIMgr : MonoBehaviour {
 		gameOverUI.SetActive(false);
 
 		playingUI.SetActive(false);
+
+		Time.timeScale = 0;
 
 	}
 
@@ -117,6 +122,8 @@ public class UIMgr : MonoBehaviour {
 		gameOverScoreText.text = scoreText.text;
 
 		playingUI.SetActive(false);
+
+		Time.timeScale = 1;
 
 	}
 

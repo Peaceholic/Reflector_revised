@@ -42,7 +42,6 @@ public class GameMgr : MonoBehaviour {
 				case GameModes.Paused:
 
 					UIMgr.Instance.PauseUI();
-					player.SetActive(false);
 					break;
 
 				case GameModes.GameOver:
