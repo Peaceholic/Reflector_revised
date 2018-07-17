@@ -53,6 +53,7 @@ public class GameMgr : MonoBehaviour {
 		}
 	}
 	public float spawnTime = 7;
+    public float initialspawnTime = 5;
 	private int currentScore = 0;
 	public int CurrentScore{
 		get{
@@ -103,8 +104,16 @@ public class GameMgr : MonoBehaviour {
 		while(true) {
 			if(gamemode == GameModes.Playing){
 				monSpawner.SpawnMonster();
-
-				yield return new WaitForSeconds(spawnTime);
+                spawnTime = initialspawnTime - CurrentScore / 2500;
+                if(spawnTime > 1)
+                {
+                    yield return new WaitForSeconds(spawnTime);
+                }
+                else
+                {
+                    spawnTime = 1;
+                    yield return new WaitForSeconds(spawnTime);
+                }
 			}
 			else if(gamemode == GameModes.Paused){
 				yield return new WaitUntil(()=>gamemode == GameModes.Playing);
