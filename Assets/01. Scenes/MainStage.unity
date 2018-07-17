@@ -258,6 +258,7 @@ GameObject:
   m_Component:
   - component: {fileID: 73575833}
   - component: {fileID: 73575832}
+  - component: {fileID: 73575834}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -298,6 +299,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &73575834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 73575831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0664006976c14421811a47c1b4dfc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &85253704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1135,7 +1147,6 @@ GameObject:
   - component: {fileID: 553494235}
   - component: {fileID: 553494234}
   - component: {fileID: 553494233}
-  - component: {fileID: 553494232}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1143,17 +1154,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &553494232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 553494231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0664006976c14421811a47c1b4dfc58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &553494233
 MonoBehaviour:
   m_ObjectHideFlags: 0
