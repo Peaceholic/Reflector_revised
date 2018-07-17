@@ -43,12 +43,16 @@ public class ChargerCtrl : MonoBehaviour {
     // Use this for initialization
     private void Start () {
 
-		playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-		// Starting to pursue player
-		StartCoroutine(this.CheckState());
-		StartCoroutine(this.DoAction());
+		var player = GameObject.FindWithTag("Player");
+        if(player != null) {
+		    playerTr = player.GetComponent<Transform>();
+        }
+
+        // Starting to pursue player
+        StartCoroutine(this.CheckState());
+        StartCoroutine(this.DoAction());
         currentState = MonsterState.Move;
         currentPatrolTime = patrolFrequency;
 
@@ -83,9 +87,7 @@ public class ChargerCtrl : MonoBehaviour {
 
 	// Check current state every designated time
 	private  IEnumerator CheckState() {
-		while(!isDie) {
-			yield return new WaitForSeconds(checkFrequency);
-
+		while(!isDie && playerTr != null) {
             switch (currentState)
             {
                 case MonsterState.Idle:
@@ -114,12 +116,13 @@ public class ChargerCtrl : MonoBehaviour {
                 default:
                     break;
             }
+			yield return new WaitForSeconds(checkFrequency);
         }
     }
 
     private  IEnumerator DoAction() {
 
-		while(!isDie){
+		while(!isDie && playerTr != null) {
 			switch(currentState) {
 				case MonsterState.Idle:
                     ActIdle();

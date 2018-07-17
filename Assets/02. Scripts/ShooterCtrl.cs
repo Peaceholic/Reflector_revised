@@ -21,9 +21,14 @@ public class ShooterCtrl : MonoBehaviour {
 
 	private Transform playerTr;
 
+    public GameObject dieEffect;
+
 	// Use this for initialization
 	void Start () {
-		playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        var player = GameObject.FindWithTag("Player");
+        if(player != null) {
+		    playerTr = player.GetComponent<Transform>();
+        }
         SetDirection();
         StartCoroutine(Move());
         StartCoroutine(Attack());
@@ -92,7 +97,7 @@ public class ShooterCtrl : MonoBehaviour {
     }
 
     IEnumerator Attack(){
-        while(!isDie){
+        while(!isDie && (playerTr != null)) {
             GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             Vector2 attackDir = playerTr.position - transform.position;
             attackDir.Normalize();
@@ -102,5 +107,12 @@ public class ShooterCtrl : MonoBehaviour {
             yield return new WaitForSeconds(attackFrequency);
         }
     }
+
+    void OnTriggerEnter2D(Collider2D other) {
+		if(other.gameObject.CompareTag("Player")) {
+            Instantiate(dieEffect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+		}
+	}
 
 }

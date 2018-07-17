@@ -7,9 +7,12 @@ public class MonsterSpawner : MonoBehaviour {
 	public GameObject shooterPrefab;
 	public GameObject chargerPrefab;
 	
-	public void SpawnMonster(){
+	// Counts number of chargers after shooter has spawned
+	private int chargerCount = 0;
+
+	public void SpawnMonster() {
 		int r = Random.Range(0, 2);
-		if(r == 0) {
+		if((chargerCount >= 3) || (r == 0)) {
 			SpawnShooter();
 		} else if(r == 1) {
 			SpawnCharger();
@@ -17,6 +20,10 @@ public class MonsterSpawner : MonoBehaviour {
 	}
 
 	private void SpawnShooter(){
+		
+		// Reset charger count
+		chargerCount = 0;
+
 		Vector3 screenPointPos = new Vector3(0, 0, 0);
 
 		int r = Random.Range(0, 3);
@@ -34,9 +41,14 @@ public class MonsterSpawner : MonoBehaviour {
 		
 		Vector3 screenToWorld = Camera.main.ScreenToWorldPoint(screenPointPos);
 		Instantiate(shooterPrefab, screenToWorld, Quaternion.identity);
+
 	}
 
 	private void SpawnCharger() {
+
+		// Add 1 to charger counter
+		chargerCount += 1;
+
 		Vector3 screenPointPos = new Vector3(0, 0, 0);
 
 		int r = Random.Range(0, 3);

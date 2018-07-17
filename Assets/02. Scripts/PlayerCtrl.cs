@@ -72,6 +72,8 @@ public class PlayerCtrl : MonoBehaviour {
 			Destroy(other.gameObject);
 		} else if(other.gameObject.CompareTag("Charger") && !isDead) {
 			ReceiveDamage(currentHealth);
+		} else if(other.gameObject.CompareTag("Shooter") && !isDead) {
+			ReceiveDamage(currentHealth);
 		}
 	}
 	
