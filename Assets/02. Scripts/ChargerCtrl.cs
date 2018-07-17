@@ -75,12 +75,9 @@ public class ChargerCtrl : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D coll)
     {
-        if(coll.gameObject.tag == "Charger") {
-            Destroy(gameObject);
-        } else if(coll.gameObject.tag == "Player") {
-            Transform otherTr = coll.transform;
-            Destroy(gameObject);
+        if(coll.gameObject.tag == "Charger" || coll.gameObject.tag == "Player") {
             Instantiate(dieEffect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
     }
 
