@@ -13,6 +13,8 @@ public class BulletCtrl : MonoBehaviour {
 			Transform otherTr = other.transform;
 			Destroy(other.gameObject);
 			Instantiate(DieEffect, otherTr.position, Quaternion.identity);
+		} else if(other.gameObject.tag == "EnemyBullet") {
+			Destroy(other.gameObject);
 		}
 	}
 }

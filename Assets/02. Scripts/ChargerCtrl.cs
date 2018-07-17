@@ -37,6 +37,9 @@ public class ChargerCtrl : MonoBehaviour {
     private float prevX;
     private float curX;
 
+    // Player die effect
+    public GameObject dieEffect;
+
     // Use this for initialization
     private void Start () {
 
@@ -74,6 +77,10 @@ public class ChargerCtrl : MonoBehaviour {
     {
         if(coll.gameObject.tag == "Charger") {
             Destroy(gameObject);
+        } else if(coll.gameObject.tag == "Player") {
+            Transform otherTr = coll.transform;
+            Destroy(gameObject);
+            Instantiate(dieEffect, transform.position, Quaternion.identity);
         }
     }
 
