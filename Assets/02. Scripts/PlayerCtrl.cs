@@ -69,44 +69,49 @@ public class PlayerCtrl : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
 		if(other.gameObject.CompareTag("EnemyBullet") && !isDead) {
 			ReceiveDamage(1);
+			Destroy(other.gameObject);
+		} else if(other.gameObject.CompareTag("Charger") && !isDead) {
+			ReceiveDamage(currentHealth);
 		}
 	}
 	
 	void Move() {
-		Vector2 moveDir = new Vector2(joystick.Horizontal, joystick.Vertical);
+
+		Vector2 moveDirJoystick, moveDirKeyboard;
 		Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
 
-		if(pos.x < 0 && moveDir.x < 0) {
-			moveDir.x = 0;
+        float horizontal = Input.GetAxisRaw("Horizontal");
+		float vertical = Input.GetAxisRaw("Vertical");
+
+		moveDirJoystick = new Vector2(joystick.Horizontal, joystick.Vertical);
+		moveDirKeyboard = (Vector3.up * vertical) + (Vector3.right * horizontal);
+
+		if(pos.x < 0 && moveDirJoystick.x < 0) {
+			moveDirJoystick.x = 0;
 		}
-		if(pos.x > Screen.width && moveDir.x > 0) {
-			moveDir.x = 0;
+		if(pos.x > Screen.width && moveDirJoystick.x > 0) {
+			moveDirJoystick.x = 0;
 		}
-		if(pos.y < 0 && moveDir.y < 0) {
-			moveDir.y = 0;
+		if(pos.y < 0 && moveDirJoystick.y < 0) {
+			moveDirJoystick.y = 0;
 		}
-		if(pos.y > Screen.height && moveDir.y > 0) {
-			moveDir.y = 0;
+		if(pos.y > Screen.height && moveDirJoystick.y > 0) {
+			moveDirJoystick.y = 0;
 		}
 
-		transform.Translate(moveDir * Time.deltaTime * moveSpeed, Space.Self);
-		
-		
-        /*
-        horizontal = Input.GetAxisRaw("Horizontal");
-		vertical = Input.GetAxisRaw("Vertical");
-
-		Vector3 moveDir = (Vector3.up * vertical) + (Vector3.right * horizontal);
-
-        transform.Translate(moveDir.normalized * Time.deltaTime * moveSpeed, Space.Self);
-        */
+		if(moveDirKeyboard.magnitude > 0) {
+			transform.Translate(moveDirKeyboard.normalized * Time.deltaTime * moveSpeed, Space.Self);
+		} else {
+			transform.Translate(moveDirJoystick * Time.deltaTime * moveSpeed, Space.Self);
+		}
+        
 	}
 	void ResetStatus(){
 		currentHealth = maxHealth;
 	}
 
 	void ReceiveDamage(int amount){
-		currentHealth -= 1;
+		currentHealth -= amount;
 		if(currentHealth >= maxHealth){
 			UIMgr.Instance.ChangeVitalityTextTo("NORMAL", Color.white);
 		}
@@ -121,7 +126,6 @@ public class PlayerCtrl : MonoBehaviour {
 
 	void Die(){
 		// Player death
-		//Player death
 		isDead = true;
 		GameMgr.Instance.Gamemode = GameModes.GameOver;
 		Instantiate(deathEffect, transform.position, Quaternion.identity);

@@ -98,6 +98,7 @@ MonoBehaviour:
   attackDist: 10
   patrolDist: 3
   checkTime: 0.5
+  dieEffect: {fileID: 1475765197828686, guid: ec93efdfa70874b01bff16ed6225f629, type: 2}
 --- !u!212 &212826501245177968
 SpriteRenderer:
   m_ObjectHideFlags: 1
