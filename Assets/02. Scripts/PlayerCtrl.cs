@@ -123,6 +123,7 @@ public class PlayerCtrl : MonoBehaviour {
 		// Player death
 		//Player death
 		isDead = true;
+		GameMgr.Instance.Gamemode = GameModes.GameOver;
 		Instantiate(deathEffect, transform.position, Quaternion.identity);
 
 		Destroy(gameObject);

@@ -110,6 +110,9 @@ public class GameMgr : MonoBehaviour {
 			else if(gamemode == GameModes.Paused){
 				yield return new WaitUntil(()=>gamemode == GameModes.Playing);
 			}
+			else if(gamemode == GameModes.GameOver){
+				break;
+			}
 
 		}
 	}

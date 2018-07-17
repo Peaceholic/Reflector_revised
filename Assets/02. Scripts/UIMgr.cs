@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIMgr : MonoBehaviour {
 	private static UIMgr instance;
@@ -24,6 +25,7 @@ public class UIMgr : MonoBehaviour {
 	public GameObject gameManager;
 
 	public Text scoreText;
+	public Text gameOverScoreText;
 	public Text vitalityText;
 	public Image reflectorGauge;
 
@@ -63,7 +65,7 @@ public class UIMgr : MonoBehaviour {
 
 		} else if (GameMgr.Instance.Gamemode == GameModes.GameOver) {
 
-			GameMgr.Instance.Gamemode = GameModes.Title;
+			SceneManager.LoadSceneAsync(0);
 
 		}
 
@@ -111,6 +113,8 @@ public class UIMgr : MonoBehaviour {
 		titleUI.SetActive(false);
 		pauseUI.SetActive(false);
 		gameOverUI.SetActive(true);
+
+		gameOverScoreText.text = scoreText.text;
 
 		playingUI.SetActive(false);
 
