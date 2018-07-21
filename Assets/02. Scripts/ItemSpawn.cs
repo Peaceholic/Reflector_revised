@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ItemSpawn : MonoBehaviour {
 
-    public GameObject itemAPrefab;
-    public GameObject itemBPrefab;
-    public GameObject itemCPrefab;
+    public GameObject immune;
+    public GameObject gaugeMult;
+    public GameObject healthRegen;
 
-    public void SpawnMonster()
+    public void SpawnItem(int range)
     {
-        int r = Random.Range(0, 3);
+        int r = Random.Range(0, range);
         if (r == 0){
             SpawnItemA();
         } else if (r == 1){
@@ -31,7 +31,7 @@ public class ItemSpawn : MonoBehaviour {
         screenPointPos = new Vector3(position1 * Screen.width, position2 * Screen.height, 10.0f);
 
         Vector3 screenToWorld = Camera.main.ScreenToWorldPoint(screenPointPos);
-        Instantiate(itemAPrefab, screenToWorld, Quaternion.identity);
+        Instantiate(immune, screenToWorld, Quaternion.identity);
     }
 
     private void SpawnItemB()
@@ -45,7 +45,7 @@ public class ItemSpawn : MonoBehaviour {
         screenPointPos = new Vector3(position1 * Screen.width, position2 * Screen.height, 10.0f);
 
         Vector3 screenToWorld = Camera.main.ScreenToWorldPoint(screenPointPos);
-        Instantiate(itemBPrefab, screenToWorld, Quaternion.identity);
+        Instantiate(gaugeMult, screenToWorld, Quaternion.identity);
     }
 
     private void SpawnItemC()
@@ -59,7 +59,7 @@ public class ItemSpawn : MonoBehaviour {
         screenPointPos = new Vector3(position1 * Screen.width, position2 * Screen.height, 10.0f);
 
         Vector3 screenToWorld = Camera.main.ScreenToWorldPoint(screenPointPos);
-        Instantiate(itemCPrefab, screenToWorld, Quaternion.identity);
+        Instantiate(healthRegen, screenToWorld, Quaternion.identity);
     }
 
 }

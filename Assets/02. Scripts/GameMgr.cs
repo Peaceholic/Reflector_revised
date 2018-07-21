@@ -34,6 +34,7 @@ public class GameMgr : MonoBehaviour {
 
 					if(prevGamemode == GameModes.Title){
 						StartCoroutine(StartSpawn());
+						StartCoroutine(StartSpawnItems());
 					}
 
 					StartCoroutine(StartScore());
@@ -68,6 +69,7 @@ public class GameMgr : MonoBehaviour {
 	public GameObject player;
 
 	private MonsterSpawner monSpawner;
+	private ItemMgr itemMgr;
 
 	void Awake(){
 		if(instance == null){
@@ -81,9 +83,9 @@ public class GameMgr : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		monSpawner = GetComponent<MonsterSpawner>();
+		itemMgr = GetComponent<ItemMgr>();
 
 		GameMgr.Instance.Gamemode = GameModes.Title;
-
 	}
 
 	// normal score increase
@@ -125,4 +127,27 @@ public class GameMgr : MonoBehaviour {
 		}
 	}
 
+	IEnumerator StartSpawnItems() {
+
+		while(true) {
+			if(gamemode == GameModes.Playing) {
+				int seconds = Random.Range(0, 6) + 5;
+				int mseconds = Random.Range(0, 100);
+				float itemSpawnTime = seconds + (float)mseconds / 100.0f;
+
+				yield return new WaitForSeconds(itemSpawnTime);
+
+				if(player == null) {
+					break;
+				}
+				
+				itemMgr.SpawnItem();
+			} else if(gamemode == GameModes.Paused) {
+				yield return new WaitUntil(()=>gamemode == GameModes.Playing);
+			} else if(gamemode == GameModes.GameOver) {
+				break;
+			}
+
+		}
+	}
 }

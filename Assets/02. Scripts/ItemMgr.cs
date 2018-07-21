@@ -10,11 +10,11 @@ public enum Item {
 
 public class ItemMgr : MonoBehaviour {
 
-	public Item feature;
 	// Total number of items
 	private int numOfItems = System.Enum.GetNames(typeof(Item)).Length;
 
 	private PlayerCtrl player;
+	private ItemSpawn itemSpawner;
 
 	// Lifespan of items
 	public float immuneLifespan = 7.0f;
@@ -31,37 +31,17 @@ public class ItemMgr : MonoBehaviour {
 	// Amount of health to restore
 	public int restoreAmount = 1;
 
-	IEnumerator SpawnItem() {
-		while(true) {
-			
-			int seconds = Random.Range(0, 6) + 5;
-			int mseconds = Random.Range(0, 100);
-			float itemSpawnTime = seconds + (float)mseconds / 100.0f;
+	public ItemMgr instance { get; set; }
 
-			yield return new WaitForSeconds(itemSpawnTime);
-
-			if(player == null) {
-				yield break;
-			}
-
-			int itemType = Random.Range(0, numOfItems);
-			switch(itemType) {
-				case 0:
-				feature = Item.Immune;
-				/* Instantiate immune item */
-				break;
-
-				case 1:
-				feature = Item.GaugeMult;
-				/* Instantiate gaugemult item */
-				break;
-				
-				case 2: 
-				feature = Item.HealthRegen;
-				/* Instantiate healthregen item */
-				break;
-			}			
+	void Start() {
+		itemSpawner = GetComponent<ItemSpawn>();
+		if(instance == null) {
+			instance = this;
 		}
+	}
+
+	public void SpawnItem() {
+		itemSpawner.SpawnItem(numOfItems);
 	}
 
 	IEnumerator DoImmune() {

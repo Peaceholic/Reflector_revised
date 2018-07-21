@@ -9,6 +9,7 @@ TagManager:
   - PlayerBullet
   - Charger
   - Shooter
+  - Item
   layers:
   - Default
   - TransparentFX
