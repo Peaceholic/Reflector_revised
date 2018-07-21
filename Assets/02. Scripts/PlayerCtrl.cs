@@ -29,6 +29,8 @@ public class PlayerCtrl : MonoBehaviour {
 
 	[HideInInspector]
 	public bool isDead;
+	[HideInInspector]
+	public bool immune;
 	public int maxHealth = 2;
 	public float maxEnergy = 3;
 
@@ -45,6 +47,8 @@ public class PlayerCtrl : MonoBehaviour {
 
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		prevX = transform.position.x;
+		isDead = false;
+		immune = false;
 	}
 
 	void DoFlip() {
@@ -113,6 +117,9 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	void ReceiveDamage(int amount){
+		if(immune) {
+			return;
+		}
 		currentHealth -= amount;
 		if(currentHealth >= maxHealth){
 			UIMgr.Instance.ChangeVitalityTextTo("NORMAL", Color.white);
@@ -133,5 +140,22 @@ public class PlayerCtrl : MonoBehaviour {
 		Instantiate(deathEffect, transform.position, Quaternion.identity);
 
 		Destroy(gameObject);
+	}
+
+	public void SetImmune(bool status) {
+		immune = status;
+	}
+
+	public void SetFillMult(float fillAmnt) {
+		fillEnergyAmount = fillAmnt;
+	}
+
+	public void RestoreHealth(int restoreAmount) {
+		int tempHealth = currentHealth + restoreAmount;
+		if(tempHealth > maxHealth) {
+			currentHealth = maxHealth;
+		} else {
+			currentHealth = tempHealth;
+		}
 	}
 }
