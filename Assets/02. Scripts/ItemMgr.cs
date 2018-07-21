@@ -16,10 +16,6 @@ public class ItemMgr : MonoBehaviour {
 	private PlayerCtrl player;
 	private ItemSpawn itemSpawner;
 
-	// Lifespan of items
-	public float immuneLifespan = 7.0f;
-	public float gaugeMultLifespan = 7.0f;
-	public float healthRegenLifespan = 7.0f;
 	
 	// Duration(in usage) of items
 	public float immuneDuration = 5.0f;
@@ -33,24 +29,32 @@ public class ItemMgr : MonoBehaviour {
 
 	public ItemMgr instance { get; set; }
 
-	void Start() {
-		itemSpawner = GetComponent<ItemSpawn>();
+	void Awake() {
+
 		if(instance == null) {
 			instance = this;
 		}
+		
 	}
 
-	public void SpawnItem() {
-		itemSpawner.SpawnItem(numOfItems);
+	void Start() {
+
+		itemSpawner = GetComponent<ItemSpawn>();
+		player = FindObjectOfType<PlayerCtrl>();
+
 	}
 
-	IEnumerator DoImmune() {
+	public GameObject SpawnItem() {
+		return itemSpawner.SpawnItem(numOfItems);
+	}
+
+	public IEnumerator DoImmune() {
 		player.SetImmune(true);
 		yield return new WaitForSeconds(immuneDuration);
 		player.SetImmune(false);
 	}
 
-	IEnumerator DoGaugeMult() {
+	public IEnumerator DoGaugeMult() {
 		float originalFillAmount = player.fillEnergyAmount;
 		float multipliedFillAmount = originalFillAmount * gaugeMultiplier;
 		player.SetFillMult(multipliedFillAmount);
@@ -59,7 +63,7 @@ public class ItemMgr : MonoBehaviour {
 
 	}
 
-	void DoHealthRegen() {
+	public void DoHealthRegen() {
 		player.RestoreHealth(restoreAmount);
 	}
 

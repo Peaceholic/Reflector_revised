@@ -39,6 +39,7 @@ public class PlayerCtrl : MonoBehaviour {
 	public GameObject deathEffect;
 
 	private JoystickPlayer joystick;
+	private ItemMgr itemMgr;
 
 	void Start()
 	{
@@ -46,6 +47,7 @@ public class PlayerCtrl : MonoBehaviour {
 		ResetStatus();
 
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+		itemMgr = FindObjectOfType<GameMgr>().itemMgr.instance;
 		prevX = transform.position.x;
 		isDead = false;
 		immune = false;
@@ -78,6 +80,23 @@ public class PlayerCtrl : MonoBehaviour {
 			ReceiveDamage(currentHealth);
 		} else if(other.gameObject.CompareTag("Shooter") && !isDead) {
 			ReceiveDamage(currentHealth);
+		} else if(other.gameObject.CompareTag("Item") && !isDead) {
+			switch(other.gameObject.name) {
+				case "Item_Immune":
+				StartCoroutine(itemMgr.DoImmune());
+				Destroy(other.gameObject);
+				break;
+				
+				case "Item_GaugeMult":
+				StartCoroutine(itemMgr.DoGaugeMult());
+				Destroy(other.gameObject);
+				break;
+
+				case "Item_HealthRegen":
+				itemMgr.DoHealthRegen();
+				Destroy(other.gameObject);
+				break;
+			}
 		}
 	}
 	

@@ -55,6 +55,12 @@ public class GameMgr : MonoBehaviour {
 	}
 	public float spawnTime = 7;
     public float initialspawnTime = 5;
+	
+	// Lifespan of items
+	public float immuneLifespan = 7.0f;
+	public float gaugeMultLifespan = 7.0f;
+	public float healthRegenLifespan = 7.0f;
+
 	private int currentScore = 0;
 	public int CurrentScore{
 		get{
@@ -69,7 +75,8 @@ public class GameMgr : MonoBehaviour {
 	public GameObject player;
 
 	private MonsterSpawner monSpawner;
-	private ItemMgr itemMgr;
+	[HideInInspector]
+	public ItemMgr itemMgr;
 
 	void Awake(){
 		if(instance == null){
@@ -141,7 +148,21 @@ public class GameMgr : MonoBehaviour {
 					break;
 				}
 				
-				itemMgr.SpawnItem();
+				GameObject item = itemMgr.SpawnItem();
+				switch(item.name) {
+					case "Item_Immune":
+					Destroy(item, immuneLifespan);
+					break;
+					
+					case "Item_GaugeMult":
+					Destroy(item, gaugeMultLifespan);
+					break;
+
+					case "Item_HealthRegen":
+					Destroy(item, healthRegenLifespan);
+					break;
+				}
+				Destroy(item, immuneLifespan);
 			} else if(gamemode == GameModes.Paused) {
 				yield return new WaitUntil(()=>gamemode == GameModes.Playing);
 			} else if(gamemode == GameModes.GameOver) {

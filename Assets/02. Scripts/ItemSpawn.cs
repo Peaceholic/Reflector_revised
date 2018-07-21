@@ -8,19 +8,24 @@ public class ItemSpawn : MonoBehaviour {
     public GameObject gaugeMult;
     public GameObject healthRegen;
 
-    public void SpawnItem(int range)
+    public GameObject SpawnItem(int range)
     {
+        GameObject item;
         int r = Random.Range(0, range);
         if (r == 0){
-            SpawnItemA();
+            item = SpawnItemA();
         } else if (r == 1){
-            SpawnItemB();
+            item = SpawnItemB();
         } else if (r == 2){
-            SpawnItemC();
+            item = SpawnItemC();
+        } else {
+            item = null;
         }
+
+        return item;
     }
 
-    private void SpawnItemA()
+    private GameObject SpawnItemA()
     {
         Vector3 screenPointPos = new Vector3(0, 0, 0);
 
@@ -31,10 +36,12 @@ public class ItemSpawn : MonoBehaviour {
         screenPointPos = new Vector3(position1 * Screen.width, position2 * Screen.height, 10.0f);
 
         Vector3 screenToWorld = Camera.main.ScreenToWorldPoint(screenPointPos);
-        Instantiate(immune, screenToWorld, Quaternion.identity);
+        GameObject item = Instantiate(immune, screenToWorld, Quaternion.identity);
+        item.name = immune.name;
+        return item;
     }
 
-    private void SpawnItemB()
+    private GameObject SpawnItemB()
     {
         Vector3 screenPointPos = new Vector3(0, 0, 0);
 
@@ -45,10 +52,12 @@ public class ItemSpawn : MonoBehaviour {
         screenPointPos = new Vector3(position1 * Screen.width, position2 * Screen.height, 10.0f);
 
         Vector3 screenToWorld = Camera.main.ScreenToWorldPoint(screenPointPos);
-        Instantiate(gaugeMult, screenToWorld, Quaternion.identity);
+        GameObject item = Instantiate(gaugeMult, screenToWorld, Quaternion.identity);
+        item.name = gaugeMult.name;
+        return item;
     }
 
-    private void SpawnItemC()
+    private GameObject SpawnItemC()
     {
         Vector3 screenPointPos = new Vector3(0, 0, 0);
 
@@ -59,7 +68,9 @@ public class ItemSpawn : MonoBehaviour {
         screenPointPos = new Vector3(position1 * Screen.width, position2 * Screen.height, 10.0f);
 
         Vector3 screenToWorld = Camera.main.ScreenToWorldPoint(screenPointPos);
-        Instantiate(healthRegen, screenToWorld, Quaternion.identity);
+        GameObject item = Instantiate(healthRegen, screenToWorld, Quaternion.identity);
+        item.name = healthRegen.name;
+        return item;
     }
 
 }
