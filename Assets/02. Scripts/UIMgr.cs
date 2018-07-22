@@ -25,6 +25,7 @@ public class UIMgr : MonoBehaviour {
 	public GameObject gameManager;
 
 	public Text scoreText;
+	public Text bestScoreText;
 	public Text gameOverScoreText;
 	public Text vitalityText;
 	public Image reflectorGauge;
@@ -119,6 +120,12 @@ public class UIMgr : MonoBehaviour {
 		pauseUI.SetActive(false);
 		gameOverUI.SetActive(true);
 
+		if(PlayerPrefs.HasKey("GameScore")){
+			bestScoreText.text = PlayerPrefs.GetInt("GameScore").ToString();
+		}
+		else{
+			bestScoreText.text = scoreText.text;
+		}
 		gameOverScoreText.text = scoreText.text;
 
 		playingUI.SetActive(false);

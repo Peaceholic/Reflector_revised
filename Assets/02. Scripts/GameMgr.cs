@@ -46,6 +46,7 @@ public class GameMgr : MonoBehaviour {
 
 				case GameModes.GameOver:
 
+					PlayerPrefs.SetInt("GameScore", CurrentScore);
 					UIMgr.Instance.GameOverUI();
 					player.SetActive(false);
 					break;
