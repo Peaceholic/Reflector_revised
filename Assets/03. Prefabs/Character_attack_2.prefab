@@ -72,7 +72,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3bb7a15e71249bc95e56abb16c28b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreAmount: 200
   DieEffect: {fileID: 1475765197828686, guid: ec93efdfa70874b01bff16ed6225f629, type: 2}
 --- !u!212 &212996203411129126
 SpriteRenderer:

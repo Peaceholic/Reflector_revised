@@ -16,11 +16,11 @@ public class PlayerCtrl : MonoBehaviour {
 		}
 		set{
 			
-			if(currentEnergy > maxEnergy){
-				currentEnergy = maxEnergy;
+			if(currentEnergy <= maxEnergy){
+				currentEnergy = value;
 			}
 			else{
-				currentEnergy = value;
+				currentEnergy = maxEnergy;
 			}
 			
 			UIMgr.Instance.ChangeGaugeFillAmountTo(currentEnergy / maxEnergy);
@@ -32,7 +32,7 @@ public class PlayerCtrl : MonoBehaviour {
 	[HideInInspector]
 	public bool immune;
 	public int maxHealth = 2;
-	public float maxEnergy = 3;
+	public float maxEnergy = 3.0f;
 
 	public float moveSpeed = 5.0f;
 	public float fillEnergyAmount = 0.1f;

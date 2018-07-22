@@ -86,17 +86,17 @@ public class ShieldCtrl : MonoBehaviour {
 			switch(energy){
 				case 1:
 				bulletObject = Instantiate(bulletPrefab[0], transform.position, Quaternion.identity);
-				player.CurrentEnergy -= 1;
+				player.CurrentEnergy -= 1.0f;
 				break;
 
 				case 2:
 				bulletObject = Instantiate(bulletPrefab[1], transform.position, Quaternion.identity);
-				player.CurrentEnergy -= 2;
+				player.CurrentEnergy -= 2.0f;
 				break;
 
 				case 3:
 				bulletObject = Instantiate(bulletPrefab[2], transform.position, Quaternion.identity);
-				player.CurrentEnergy -= 3;
+				player.CurrentEnergy -= 3.0f;
 				break;
 
 				default:
@@ -111,7 +111,13 @@ public class ShieldCtrl : MonoBehaviour {
 	
 	void OnTriggerEnter2D(Collider2D coll) {
 		if(coll.gameObject.CompareTag("EnemyBullet")) {
-			player.CurrentEnergy += player.fillEnergyAmount;
+			float filledEnergy = player.CurrentEnergy + player.fillEnergyAmount;
+			if(filledEnergy > 3.0) {
+				player.CurrentEnergy = 3.0f;
+			} else {
+			player.CurrentEnergy = filledEnergy;
+			}
+			Debug.Log(player.CurrentEnergy);
 			Destroy(coll.gameObject);
 		}
 	}

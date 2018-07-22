@@ -13,7 +13,7 @@ public class ItemMgr : MonoBehaviour {
 	// Total number of items
 	private int numOfItems = System.Enum.GetNames(typeof(Item)).Length;
 
-	private PlayerCtrl player;
+	public PlayerCtrl player;
 	private ItemSpawn itemSpawner;
 
 	
@@ -40,7 +40,6 @@ public class ItemMgr : MonoBehaviour {
 	void Start() {
 
 		itemSpawner = GetComponent<ItemSpawn>();
-		player = FindObjectOfType<PlayerCtrl>();
 
 	}
 
@@ -65,6 +64,10 @@ public class ItemMgr : MonoBehaviour {
 
 	public void DoHealthRegen() {
 		player.RestoreHealth(restoreAmount);
+	}
+
+	public void SetPlayer() {
+		player = FindObjectOfType<PlayerCtrl>();
 	}
 
 }

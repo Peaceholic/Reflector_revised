@@ -31,6 +31,7 @@ public class GameMgr : MonoBehaviour {
 
 					UIMgr.Instance.PlayUI();
 					player.SetActive(true);
+					itemMgr.SetPlayer();
 
 					if(prevGamemode == GameModes.Title){
 						StartCoroutine(StartSpawn());

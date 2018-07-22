@@ -1199,7 +1199,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnTime: 1
   initialspawnTime: 5
+  immuneLifespan: 7
+  gaugeMultLifespan: 7
+  healthRegenLifespan: 7
   player: {fileID: 1216598261}
+  itemMgr: {fileID: 0}
 --- !u!4 &553494235
 Transform:
   m_ObjectHideFlags: 0
@@ -1224,9 +1228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b5390c02de04ef4a072741e0aed4d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  immuneLifespan: 7
-  gaugeMultLifespan: 7
-  healthRegenLifespan: 7
+  player: {fileID: 0}
   immuneDuration: 5
   gaugeMultDuration: 5
   gaugeMultiplier: 2
