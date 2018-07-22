@@ -357,6 +357,7 @@ MonoBehaviour:
   playingUI: {fileID: 309919083}
   gameManager: {fileID: 553494231}
   scoreText: {fileID: 432671483}
+  bestScoreText: {fileID: 30937957}
   gameOverScoreText: {fileID: 1506811393}
   vitalityText: {fileID: 525327959}
   reflectorGauge: {fileID: 946326658}
@@ -848,7 +849,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &309919084
 RectTransform:
   m_ObjectHideFlags: 0
@@ -891,7 +892,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &397931945
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1365,7 +1366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &735390793
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2184,7 +2185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1613355067
 RectTransform:
   m_ObjectHideFlags: 0
