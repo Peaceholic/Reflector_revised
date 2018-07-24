@@ -1990,7 +1990,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eca9edbdbb3e4e5b9282cf1b378add7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolList: []
+  poolList:
+  - poolPrefab: {fileID: 1311881030310864, guid: ee59deaebfd9e4fbb94e5901cee57756,
+      type: 2}
+    poolAmount: 0
 --- !u!4 &1410603562
 Transform:
   m_ObjectHideFlags: 0
