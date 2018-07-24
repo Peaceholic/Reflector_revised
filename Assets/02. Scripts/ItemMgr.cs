@@ -44,7 +44,7 @@ public class ItemMgr : MonoBehaviour {
 	}
 
 	public GameObject SpawnItem() {
-		return itemSpawner.SpawnItem(numOfItems);
+		return itemSpawner.SpawnItem();
 	}
 
 	public IEnumerator DoImmune() {
