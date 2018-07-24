@@ -10,6 +10,25 @@ public class PlayerCtrl : MonoBehaviour {
 
 	private SpriteRenderer spriteRenderer;
 
+	public int CurrentHealth{
+		get{
+			return currentHealth;
+		}
+		set{
+			currentHealth = value;
+			if(currentHealth >= maxHealth){
+				currentHealth = maxHealth;
+				UIMgr.Instance.ChangeVitalityTextTo("NORMAL", Color.white);
+			}
+			else if(currentHealth == 1){
+				UIMgr.Instance.ChangeVitalityTextTo("FATAL", Color.red);
+			}
+			else if(currentHealth <= 0){
+				UIMgr.Instance.ChangeVitalityTextTo("DEAD", Color.red);
+				Die();
+			}
+		}
+	}
 	public float CurrentEnergy{
 		get{
 			return currentEnergy;
@@ -47,7 +66,7 @@ public class PlayerCtrl : MonoBehaviour {
 		ResetStatus();
 
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-		itemMgr = FindObjectOfType<GameMgr>().itemMgr.instance;
+		itemMgr = FindObjectOfType<GameMgr>().ItemMgr.instance;
 		prevX = transform.position.x;
 		isDead = false;
 		immune = false;
@@ -140,16 +159,7 @@ public class PlayerCtrl : MonoBehaviour {
 			return;
 		}
 		currentHealth -= amount;
-		if(currentHealth >= maxHealth){
-			UIMgr.Instance.ChangeVitalityTextTo("NORMAL", Color.white);
-		}
-		else if(currentHealth == 1){
-			UIMgr.Instance.ChangeVitalityTextTo("FATAL", Color.red);
-		}
-		else if(currentHealth <= 0){
-			UIMgr.Instance.ChangeVitalityTextTo("DEAD", Color.red);
-			Die();
-		}
+		
 	}
 
 	void Die(){

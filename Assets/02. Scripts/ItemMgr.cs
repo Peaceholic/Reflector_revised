@@ -10,9 +10,6 @@ public enum Item {
 
 public class ItemMgr : MonoBehaviour {
 
-	// Total number of items
-	private int numOfItems = System.Enum.GetNames(typeof(Item)).Length;
-
 	public PlayerCtrl player;
 	private ItemSpawn itemSpawner;
 
@@ -27,18 +24,25 @@ public class ItemMgr : MonoBehaviour {
 	// Amount of health to restore
 	public int restoreAmount = 1;
 
-	public ItemMgr instance { get; set; }
+	private ItemMgr instance;
+	public ItemMgr Instance {
+		get{
+			return instance;
+		}
+	}
 
 	void Awake() {
 
 		if(instance == null) {
 			instance = this;
 		}
+		else{
+			Destroy(this.gameObject);
+		}
 		
 	}
 
 	void Start() {
-
 		itemSpawner = GetComponent<ItemSpawn>();
 
 	}
