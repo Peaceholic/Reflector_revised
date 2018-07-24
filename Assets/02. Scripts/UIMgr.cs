@@ -53,6 +53,10 @@ public class UIMgr : MonoBehaviour {
 		reflectorGauge.fillAmount = amount;
 	}
 
+	public void ChangeGaugeColor(Color color){
+		reflectorGauge.color = color;
+	}
+
 	public void OnClickTransparentBackground() {
 
 		if (GameMgr.Instance.Gamemode == GameModes.Title) {

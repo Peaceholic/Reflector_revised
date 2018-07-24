@@ -170,8 +170,10 @@ public class PlayerCtrl : MonoBehaviour {
 	public IEnumerator ApplyGaugeMult(float gaugeMultiplier, float gaugeMultDuration){
 		float multipliedFillAmount = fillEnergyAmount * gaugeMultiplier;
 		SetFillMult(multipliedFillAmount);
+		UIMgr.Instance.ChangeGaugeColor(Color.red);
 		yield return new WaitForSeconds(gaugeMultDuration);
 		SetFillMult(fillEnergyAmount);
+		UIMgr.Instance.ChangeGaugeColor(Color.white);
 	}
 
 	public void SetFillMult(float fillAmnt) {
