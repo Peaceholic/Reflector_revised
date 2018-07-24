@@ -139,8 +139,7 @@ public class GameMgr : MonoBehaviour {
 				int mseconds = Random.Range(0, 100);
 				float itemSpawnTime = seconds + (float)mseconds / 100.0f;
 
-				//yield return new WaitForSeconds(itemSpawnTime);
-				yield return new WaitForSeconds(1);
+				yield return new WaitForSeconds(itemSpawnTime);
 
 				GameObject item = ItemSpawner.SpawnItem();
 				Destroy(item, itemLifeSpan);

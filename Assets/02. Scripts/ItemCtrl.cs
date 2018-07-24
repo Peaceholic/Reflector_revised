@@ -24,15 +24,15 @@ public class ItemCtrl : MonoBehaviour {
 	public void ApplyItemEffect(PlayerCtrl player){
 		switch(itemType){
 			case ItemType.Immune:
-				StartCoroutine(player.ApplyImmune(immuneDuration));
+				player.StartCoroutine(player.ApplyImmune(immuneDuration));
 			break;
 
 			case ItemType.GaugeMult:
-				StartCoroutine(ApplyGaugeMult(player));
+				player.StartCoroutine(player.ApplyGaugeMult(gaugeMultiplier, gaugeMultDuration));
 			break;
 
 			case ItemType.HealthRegen:
-				StartCoroutine(ApplyHealthRegen(player));
+				player.ApplyHealthRegen(restoreAmount);
 			break;
 
 			default:
@@ -47,10 +47,5 @@ public class ItemCtrl : MonoBehaviour {
 		player.SetFillMult(multipliedFillAmount);
 		yield return new WaitForSeconds(gaugeMultDuration);
 		player.SetFillMult(originalFillAmount);
-	}
-
-	private IEnumerator ApplyHealthRegen(PlayerCtrl player){
-		player.RestoreHealth(restoreAmount);
-		yield return null;
 	}
 }

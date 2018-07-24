@@ -167,7 +167,7 @@ public class PlayerCtrl : MonoBehaviour {
 		immune = false;
 	}
 	
-	private IEnumerator ApplyGaugeMult(float gaugeMultiplier, float gaugeMultDuration){
+	public IEnumerator ApplyGaugeMult(float gaugeMultiplier, float gaugeMultDuration){
 		float multipliedFillAmount = fillEnergyAmount * gaugeMultiplier;
 		SetFillMult(multipliedFillAmount);
 		yield return new WaitForSeconds(gaugeMultDuration);
@@ -178,7 +178,7 @@ public class PlayerCtrl : MonoBehaviour {
 		currentFillEnergyAmount = fillAmnt;
 	}
 
-	public void RestoreHealth(int restoreAmount) {
+	public void ApplyHealthRegen(int restoreAmount) {
 		int tempHealth = currentHealth + restoreAmount;
 		if(tempHealth > maxHealth) {
 			CurrentHealth = maxHealth;
