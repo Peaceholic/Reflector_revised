@@ -10,17 +10,37 @@ public class PlayerCtrl : MonoBehaviour {
 
 	private SpriteRenderer spriteRenderer;
 
+	public int CurrentHealth{
+		get{
+			return currentHealth;
+		}
+		set{
+			currentHealth = value;
+			Debug.Log(currentHealth);
+			if(currentHealth >= maxHealth){
+				currentHealth = maxHealth;
+				UIMgr.Instance.ChangeVitalityTextTo("NORMAL", Color.white);
+			}
+			else if(currentHealth == 1){
+				UIMgr.Instance.ChangeVitalityTextTo("FATAL", Color.red);
+			}
+			else if(currentHealth <= 0){
+				UIMgr.Instance.ChangeVitalityTextTo("DEAD", Color.red);
+				Die();
+			}
+		}
+	}
 	public float CurrentEnergy{
 		get{
 			return currentEnergy;
 		}
 		set{
 			
-			if(currentEnergy > maxEnergy){
-				currentEnergy = maxEnergy;
+			if(currentEnergy <= maxEnergy){
+				currentEnergy = value;
 			}
 			else{
-				currentEnergy = value;
+				currentEnergy = maxEnergy;
 			}
 			
 			UIMgr.Instance.ChangeGaugeFillAmountTo(currentEnergy / maxEnergy);
@@ -29,11 +49,14 @@ public class PlayerCtrl : MonoBehaviour {
 
 	[HideInInspector]
 	public bool isDead;
+	[HideInInspector]
+	public bool immune;
 	public int maxHealth = 2;
-	public float maxEnergy = 3;
+	public float maxEnergy = 3.0f;
 
 	public float moveSpeed = 5.0f;
 	public float fillEnergyAmount = 0.1f;
+	public float currentFillEnergyAmount = 0.1f;
 	public GameObject deathEffect;
 
 	private JoystickPlayer joystick;
@@ -45,6 +68,8 @@ public class PlayerCtrl : MonoBehaviour {
 
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		prevX = transform.position.x;
+		isDead = false;
+		immune = false;
 	}
 
 	void DoFlip() {
@@ -71,9 +96,12 @@ public class PlayerCtrl : MonoBehaviour {
 			ReceiveDamage(1);
 			Destroy(other.gameObject);
 		} else if(other.gameObject.CompareTag("Charger") && !isDead) {
-			ReceiveDamage(currentHealth);
+			ReceiveDamage(CurrentHealth);
 		} else if(other.gameObject.CompareTag("Shooter") && !isDead) {
-			ReceiveDamage(currentHealth);
+			ReceiveDamage(CurrentHealth);
+		} else if(other.gameObject.CompareTag("Item") && !isDead) {
+			var item = other.GetComponent<ItemCtrl>();
+			item.ApplyItemEffect(this);
 		}
 	}
 	
@@ -109,21 +137,15 @@ public class PlayerCtrl : MonoBehaviour {
         
 	}
 	void ResetStatus(){
-		currentHealth = maxHealth;
+		CurrentHealth = maxHealth;
 	}
 
 	void ReceiveDamage(int amount){
-		currentHealth -= amount;
-		if(currentHealth >= maxHealth){
-			UIMgr.Instance.ChangeVitalityTextTo("NORMAL", Color.white);
+		if(immune) {
+			return;
 		}
-		else if(currentHealth == 1){
-			UIMgr.Instance.ChangeVitalityTextTo("FATAL", Color.red);
-		}
-		else if(currentHealth <= 0){
-			UIMgr.Instance.ChangeVitalityTextTo("DEAD", Color.red);
-			Die();
-		}
+		CurrentHealth -= amount;
+		
 	}
 
 	void Die(){
@@ -133,5 +155,37 @@ public class PlayerCtrl : MonoBehaviour {
 		Instantiate(deathEffect, transform.position, Quaternion.identity);
 
 		Destroy(gameObject);
+	}
+
+	public void SetImmune(bool status) {
+		immune = status;
+	}
+
+	public IEnumerator ApplyImmune(float immuneDuration){
+		immune = true;
+		yield return new WaitForSeconds(immuneDuration);
+		immune = false;
+	}
+	
+	public IEnumerator ApplyGaugeMult(float gaugeMultiplier, float gaugeMultDuration){
+		float multipliedFillAmount = fillEnergyAmount * gaugeMultiplier;
+		SetFillMult(multipliedFillAmount);
+		UIMgr.Instance.ChangeGaugeColor(Color.red);
+		yield return new WaitForSeconds(gaugeMultDuration);
+		SetFillMult(fillEnergyAmount);
+		UIMgr.Instance.ChangeGaugeColor(Color.white);
+	}
+
+	public void SetFillMult(float fillAmnt) {
+		currentFillEnergyAmount = fillAmnt;
+	}
+
+	public void ApplyHealthRegen(int restoreAmount) {
+		int tempHealth = currentHealth + restoreAmount;
+		if(tempHealth > maxHealth) {
+			CurrentHealth = maxHealth;
+		} else {
+			CurrentHealth = tempHealth;
+		}
 	}
 }

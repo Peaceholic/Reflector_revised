@@ -1222,6 +1222,7 @@ GameObject:
   - component: {fileID: 553494235}
   - component: {fileID: 553494234}
   - component: {fileID: 553494233}
+  - component: {fileID: 553494236}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1257,6 +1258,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnTime: 1
   initialspawnTime: 5
+<<<<<<< HEAD
+=======
+  itemLifeSpan: 7
+>>>>>>> feature/Itemfunc
   player: {fileID: 1216598261}
 --- !u!4 &553494235
 Transform:
@@ -1271,6 +1276,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &553494236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 553494231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2bb60267daf4412a917113e61b860ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPrefabList:
+  - {fileID: 1803572372764606, guid: 0c43e83131e3a486bb2b36a700575b99, type: 2}
+  - {fileID: 1243126290920752, guid: 484b42cf7eecc48029a85d991bd4c1db, type: 2}
+  - {fileID: 1767625669338630, guid: 15cf0d46aa27c4ebe9614d7ca1201583, type: 2}
 --- !u!1 &620209457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1720,10 +1740,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
+  immune: 0
   maxHealth: 2
   maxEnergy: 3
   moveSpeed: 5
   fillEnergyAmount: 0.1
+  currentFillEnergyAmount: 0.1
   deathEffect: {fileID: 1137059722296254, guid: 4c955574ba9f74b9a95e0c60128d0c62,
     type: 2}
 --- !u!70 &1216598263
@@ -2047,6 +2069,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolList: []
+  poolList:
+  - poolPrefab: {fileID: 1311881030310864, guid: ee59deaebfd9e4fbb94e5901cee57756,
+      type: 2}
+    poolAmount: 0
 --- !u!4 &1410603562
 Transform:
   m_ObjectHideFlags: 0
