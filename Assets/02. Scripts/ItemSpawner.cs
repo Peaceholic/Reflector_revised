@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemSpawn : MonoBehaviour {
+public class ItemSpawner : MonoBehaviour {
     public List<GameObject> itemPrefabList;
 
     public GameObject SpawnItem()

@@ -21,23 +21,36 @@ public class ItemCtrl : MonoBehaviour {
 	// Amount of health to restore
 	public int restoreAmount = 1;
 
-	public void ApplyItemEffect(){
+	public void ApplyItemEffect(PlayerCtrl player){
 		switch(itemType){
 			case ItemType.Immune:
-
+				StartCoroutine(player.ApplyImmune(immuneDuration));
 			break;
 
 			case ItemType.GaugeMult:
-
+				StartCoroutine(ApplyGaugeMult(player));
 			break;
 
 			case ItemType.HealthRegen:
-
+				StartCoroutine(ApplyHealthRegen(player));
 			break;
 
 			default:
-
 			break;
 		}
+		Destroy(this.gameObject);
+	}
+
+	private IEnumerator ApplyGaugeMult(PlayerCtrl player){
+		float originalFillAmount = player.fillEnergyAmount;
+		float multipliedFillAmount = originalFillAmount * gaugeMultiplier;
+		player.SetFillMult(multipliedFillAmount);
+		yield return new WaitForSeconds(gaugeMultDuration);
+		player.SetFillMult(originalFillAmount);
+	}
+
+	private IEnumerator ApplyHealthRegen(PlayerCtrl player){
+		player.RestoreHealth(restoreAmount);
+		yield return null;
 	}
 }

@@ -16,6 +16,7 @@ public class PlayerCtrl : MonoBehaviour {
 		}
 		set{
 			currentHealth = value;
+			Debug.Log(currentHealth);
 			if(currentHealth >= maxHealth){
 				currentHealth = maxHealth;
 				UIMgr.Instance.ChangeVitalityTextTo("NORMAL", Color.white);
@@ -59,7 +60,6 @@ public class PlayerCtrl : MonoBehaviour {
 	public GameObject deathEffect;
 
 	private JoystickPlayer joystick;
-	private ItemMgr itemMgr;
 
 	void Start()
 	{
@@ -67,7 +67,6 @@ public class PlayerCtrl : MonoBehaviour {
 		ResetStatus();
 
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-		itemMgr = FindObjectOfType<GameMgr>().ItemMgr.instance;
 		prevX = transform.position.x;
 		isDead = false;
 		immune = false;
@@ -97,26 +96,12 @@ public class PlayerCtrl : MonoBehaviour {
 			ReceiveDamage(1);
 			Destroy(other.gameObject);
 		} else if(other.gameObject.CompareTag("Charger") && !isDead) {
-			ReceiveDamage(currentHealth);
+			ReceiveDamage(CurrentHealth);
 		} else if(other.gameObject.CompareTag("Shooter") && !isDead) {
-			ReceiveDamage(currentHealth);
+			ReceiveDamage(CurrentHealth);
 		} else if(other.gameObject.CompareTag("Item") && !isDead) {
-			switch(other.gameObject.name) {
-				case "Item_Immune":
-				StartCoroutine(itemMgr.DoImmune());
-				Destroy(other.gameObject);
-				break;
-				
-				case "Item_GaugeMult":
-				StartCoroutine(itemMgr.DoGaugeMult());
-				Destroy(other.gameObject);
-				break;
-
-				case "Item_HealthRegen":
-				itemMgr.DoHealthRegen();
-				Destroy(other.gameObject);
-				break;
-			}
+			var item = other.GetComponent<ItemCtrl>();
+			item.ApplyItemEffect(this);
 		}
 	}
 	
@@ -152,14 +137,14 @@ public class PlayerCtrl : MonoBehaviour {
         
 	}
 	void ResetStatus(){
-		currentHealth = maxHealth;
+		CurrentHealth = maxHealth;
 	}
 
 	void ReceiveDamage(int amount){
 		if(immune) {
 			return;
 		}
-		currentHealth -= amount;
+		CurrentHealth -= amount;
 		
 	}
 
@@ -176,6 +161,19 @@ public class PlayerCtrl : MonoBehaviour {
 		immune = status;
 	}
 
+	public IEnumerator ApplyImmune(float immuneDuration){
+		immune = true;
+		yield return new WaitForSeconds(immuneDuration);
+		immune = false;
+	}
+	
+	private IEnumerator ApplyGaugeMult(float gaugeMultiplier, float gaugeMultDuration){
+		float multipliedFillAmount = fillEnergyAmount * gaugeMultiplier;
+		SetFillMult(multipliedFillAmount);
+		yield return new WaitForSeconds(gaugeMultDuration);
+		SetFillMult(fillEnergyAmount);
+	}
+
 	public void SetFillMult(float fillAmnt) {
 		currentFillEnergyAmount = fillAmnt;
 	}
@@ -183,9 +181,9 @@ public class PlayerCtrl : MonoBehaviour {
 	public void RestoreHealth(int restoreAmount) {
 		int tempHealth = currentHealth + restoreAmount;
 		if(tempHealth > maxHealth) {
-			currentHealth = maxHealth;
+			CurrentHealth = maxHealth;
 		} else {
-			currentHealth = tempHealth;
+			CurrentHealth = tempHealth;
 		}
 	}
 }

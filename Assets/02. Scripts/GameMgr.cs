@@ -31,7 +31,6 @@ public class GameMgr : MonoBehaviour {
 
 					UIMgr.Instance.PlayUI();
 					player.SetActive(true);
-					itemMgr.SetPlayer();
 
 					if(prevGamemode == GameModes.Title){
 						StartCoroutine(StartSpawn());
@@ -58,9 +57,7 @@ public class GameMgr : MonoBehaviour {
     public float initialspawnTime = 5;
 	
 	// Lifespan of items
-	public float immuneLifespan = 7.0f;
-	public float gaugeMultLifespan = 7.0f;
-	public float healthRegenLifespan = 7.0f;
+	public float itemLifeSpan = 7f;
 
 	private int currentScore = 0;
 	public int CurrentScore{
@@ -76,8 +73,7 @@ public class GameMgr : MonoBehaviour {
 	public GameObject player;
 
 	private MonsterSpawner monSpawner;
-	[HideInInspector]
-	public ItemMgr itemMgr;
+	private ItemSpawner ItemSpawner;
 
 	void Awake(){
 		if(instance == null){
@@ -91,7 +87,7 @@ public class GameMgr : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		monSpawner = GetComponent<MonsterSpawner>();
-		itemMgr = GetComponent<ItemMgr>();
+		ItemSpawner = GetComponent<ItemSpawner>();
 
 		GameMgr.Instance.Gamemode = GameModes.Title;
 	}
@@ -143,27 +139,11 @@ public class GameMgr : MonoBehaviour {
 				int mseconds = Random.Range(0, 100);
 				float itemSpawnTime = seconds + (float)mseconds / 100.0f;
 
-				yield return new WaitForSeconds(itemSpawnTime);
+				//yield return new WaitForSeconds(itemSpawnTime);
+				yield return new WaitForSeconds(1);
 
-				if(player == null) {
-					break;
-				}
-				
-				GameObject item = itemMgr.SpawnItem();
-				switch(item.name) {
-					case "Item_Immune":
-					Destroy(item, immuneLifespan);
-					break;
-					
-					case "Item_GaugeMult":
-					Destroy(item, gaugeMultLifespan);
-					break;
-
-					case "Item_HealthRegen":
-					Destroy(item, healthRegenLifespan);
-					break;
-				}
-				Destroy(item, immuneLifespan);
+				GameObject item = ItemSpawner.SpawnItem();
+				Destroy(item, itemLifeSpan);
 			} else if(gamemode == GameModes.Paused) {
 				yield return new WaitUntil(()=>gamemode == GameModes.Playing);
 			} else if(gamemode == GameModes.GameOver) {
