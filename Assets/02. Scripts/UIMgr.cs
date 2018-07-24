@@ -121,10 +121,10 @@ public class UIMgr : MonoBehaviour {
 		gameOverUI.SetActive(true);
 
 		if(PlayerPrefs.HasKey("GameScore")){
-			bestScoreText.text = PlayerPrefs.GetInt("GameScore").ToString();
+			bestScoreText.text = "Best: " + PlayerPrefs.GetInt("GameScore").ToString();
 		}
 		else{
-			bestScoreText.text = scoreText.text;
+			bestScoreText.text = "Best: " + scoreText.text;
 		}
 		gameOverScoreText.text = scoreText.text;
 
