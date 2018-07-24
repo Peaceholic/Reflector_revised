@@ -46,7 +46,15 @@ public class GameMgr : MonoBehaviour {
 
 				case GameModes.GameOver:
 
-					PlayerPrefs.SetInt("GameScore", CurrentScore);
+					if(PlayerPrefs.HasKey("GameScore")){
+						if(PlayerPrefs.GetInt("GameScore") < CurrentScore){
+							PlayerPrefs.SetInt("GameScore", CurrentScore);
+						}
+					}
+					else{
+						PlayerPrefs.SetInt("GameScore", CurrentScore);
+					}
+					
 					UIMgr.Instance.GameOverUI();
 					player.SetActive(false);
 					break;
