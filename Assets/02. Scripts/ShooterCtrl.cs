@@ -110,6 +110,7 @@ public class ShooterCtrl : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) {
 		if(other.gameObject.CompareTag("Player")) {
+            SfxMgr.Instance.PlayEffect(1);
             Instantiate(dieEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
 		}

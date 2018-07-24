@@ -80,6 +80,7 @@ public class ChargerCtrl : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D coll)
     {
         if(coll.gameObject.tag == "Charger" || coll.gameObject.tag == "Player") {
+            SfxMgr.Instance.PlayEffect(1);
             Instantiate(dieEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
@@ -111,6 +112,7 @@ public class ChargerCtrl : MonoBehaviour {
                 case MonsterState.Chase:
                     break;
                 case MonsterState.Attack:
+                    SfxMgr.Instance.PlayEffect(0);
                     moveDestination = playerTr.position - transform.position;
                     yield break;
                 default:

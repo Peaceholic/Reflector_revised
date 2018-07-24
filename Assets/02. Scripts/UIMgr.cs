@@ -103,6 +103,7 @@ public class UIMgr : MonoBehaviour {
 
 	public void PauseUI() {
 
+		SfxMgr.Instance.PlayEffect(7);
 		titleUI.SetActive(false);
 		pauseUI.SetActive(true);
 		gameOverUI.SetActive(false);

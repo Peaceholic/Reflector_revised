@@ -155,6 +155,7 @@ public class PlayerCtrl : MonoBehaviour {
 
 	void Die(){
 		// Player death
+		SfxMgr.Instance.PlayEffect(2);
 		isDead = true;
 		GameMgr.Instance.Gamemode = GameModes.GameOver;
 		Instantiate(deathEffect, transform.position, Quaternion.identity);

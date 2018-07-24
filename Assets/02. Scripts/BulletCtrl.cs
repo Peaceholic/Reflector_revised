@@ -9,6 +9,7 @@ public class BulletCtrl : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) {
 		if((other.gameObject.tag == "Shooter") || (other.gameObject.tag == "Charger")) {
+			SfxMgr.Instance.PlayEffect(1);
 			GameMgr.Instance.CurrentScore += scoreAmount;
 			Transform otherTr = other.transform;
 			Destroy(other.gameObject);
