@@ -111,7 +111,7 @@ public class ShieldCtrl : MonoBehaviour {
 	
 	void OnTriggerEnter2D(Collider2D coll) {
 		if(coll.gameObject.CompareTag("EnemyBullet")) {
-			float filledEnergy = player.CurrentEnergy + player.fillEnergyAmount;
+			float filledEnergy = player.CurrentEnergy + player.currentFillEnergyAmount;
 			if(filledEnergy > 3.0) {
 				player.CurrentEnergy = 3.0f;
 			} else {

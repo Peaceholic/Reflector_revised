@@ -36,6 +36,7 @@ public class PlayerCtrl : MonoBehaviour {
 
 	public float moveSpeed = 5.0f;
 	public float fillEnergyAmount = 0.1f;
+	public float currentFillEnergyAmount = 0.1f;
 	public GameObject deathEffect;
 
 	private JoystickPlayer joystick;
@@ -166,7 +167,7 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	public void SetFillMult(float fillAmnt) {
-		fillEnergyAmount = fillAmnt;
+		currentFillEnergyAmount = fillAmnt;
 	}
 
 	public void RestoreHealth(int restoreAmount) {

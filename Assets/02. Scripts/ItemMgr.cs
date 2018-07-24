@@ -15,7 +15,6 @@ public class ItemMgr : MonoBehaviour {
 
 	public PlayerCtrl player;
 	private ItemSpawn itemSpawner;
-
 	
 	// Duration(in usage) of items
 	public float immuneDuration = 5.0f;
@@ -69,5 +68,7 @@ public class ItemMgr : MonoBehaviour {
 	public void SetPlayer() {
 		player = FindObjectOfType<PlayerCtrl>();
 	}
+
+	
 
 }
