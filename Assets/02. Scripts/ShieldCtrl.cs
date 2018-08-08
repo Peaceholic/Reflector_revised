@@ -7,18 +7,15 @@ public class ShieldCtrl : MonoBehaviour {
 
     public float movSpeed = 20.0f;
 	public float attackSpeed = 20.0f;
-	public GameObject[] bulletPrefab;
-	
+	public GameObject laserPrefab;
+
 	private Transform parentTr;
 	private float mouseX;
 	private float mouseY;
-	private const float distance = 1.7f;
+	private const float distance = 1f;
 	private JoystickShield joystick;
 	private PlayerCtrl player;
-
-
-
-
+		
 	// Use this for initialization
 	void Start () {
 		// get parent's transform component
@@ -50,7 +47,7 @@ public class ShieldCtrl : MonoBehaviour {
 
 		// Keeps distance between character and shield
 		float distBetweenTwo = Vector3.SqrMagnitude(parentTr.position - transform.position);
-		if(distance != distBetweenTwo) {
+		if(distance*distance != distBetweenTwo) {
 			transform.position = (transform.position - parentTr.position).normalized * distance + parentTr.position;
 		}
 
@@ -77,6 +74,34 @@ public class ShieldCtrl : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0, 0, rotDeg);
 	}
 
+	IEnumerator Attack() {
+		while(true) {
+			player.CurrentEnergy -= player.energyUseRate;
+			yield return new WaitForSeconds(0.1f);
+
+			if(player.CurrentEnergy < 0.1) {
+				break;
+			}
+		}
+	}
+
+	public IEnumerator CheckEnergy() {
+		while(true) {
+			if(player.CurrentEnergy >= player.maxEnergy) {
+				GameObject laserObject;
+
+				laserObject = Instantiate(laserPrefab, transform.position, Quaternion.identity);
+				laserObject.transform.parent = transform;
+				laserObject.transform.rotation = transform.rotation;
+				StartCoroutine(Attack());
+
+			}
+			yield return null;
+		}
+	}
+/*
+ *  Old attack function
+ *
 	public void Attack(){
 		if(player.CurrentEnergy >= player.maxEnergy / 3){
 			int energy = (int)player.CurrentEnergy;
@@ -108,7 +133,7 @@ public class ShieldCtrl : MonoBehaviour {
 		}
 		
 	}
-	
+*/	
 	void OnTriggerEnter2D(Collider2D coll) {
 		if(coll.gameObject.CompareTag("EnemyBullet")) {
 			float filledEnergy = player.CurrentEnergy + player.currentFillEnergyAmount;
@@ -117,7 +142,6 @@ public class ShieldCtrl : MonoBehaviour {
 			} else {
 			player.CurrentEnergy = filledEnergy;
 			}
-			Debug.Log(player.CurrentEnergy);
 			Destroy(coll.gameObject);
 		}
 	}
