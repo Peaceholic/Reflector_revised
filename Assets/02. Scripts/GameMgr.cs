@@ -34,7 +34,7 @@ public class GameMgr : MonoBehaviour {
 
 					if(prevGamemode == GameModes.Title){
 						StartCoroutine(FindObjectOfType<ShieldCtrl>().CheckEnergy());
-						StartCoroutine(StartSpawn());
+						//StartCoroutine(StartSpawn());
 						StartCoroutine(StartSpawnItems());
 					}
 

@@ -9,13 +9,17 @@ public class BulletCtrl : MonoBehaviour {
 	private BoxCollider2D boxCollider;
 	private Animator anim;
 	private PlayerCtrl player;
+	private ShieldCtrl shield;
+	private SpriteRenderer spriteRenderer;
 	private Renderer renderer;
 
 	void Start() {
 		boxCollider = GetComponent<BoxCollider2D>();
 		anim = GetComponent<Animator>();
 		player = GetComponentInParent<PlayerCtrl>();
+		shield = GetComponentInParent<ShieldCtrl>();
 		renderer = GetComponent<Renderer>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
 
 
 		StartCoroutine(this.CheckEnd());
@@ -23,25 +27,34 @@ public class BulletCtrl : MonoBehaviour {
 
 	void Update() {
 		CheckBound();
-		
-		Debug.Log(renderer.bounds.min);
-		Debug.Log(renderer.bounds.max);
 	}
 
 	void CheckBound() {
 		Vector3 screenWorldPoints = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
 
-		
+		float eulerZ = shield.transform.eulerAngles.z;
+		float sizeY = 1;
+		float sizeX = 1;
+		float newSize = 1;
+		if((0 <= eulerZ) && (eulerZ < 180)) {
+			sizeY = screenWorldPoints.y - shield.transform.position.y;
+		} else {
+			sizeY = screenWorldPoints.y + shield.transform.position.y;
+		}
 
-		//boxCollider.offset = new Vector2((newCoordX + 1) / 2, 0);
-		//boxCollider.size = new Vector2((newCoordX + 1), 0.5f);
 		
-		float playerTrX = player.transform.position.x;
-		float playerTrY = player.transform.position.y;
-		float laserEndOfScreenDist = playerTrX > 0 ? playerTrX + screenWorldPoints.x : screenWorldPoints.x - playerTrX;
-		boxCollider.offset = new Vector2((laserEndOfScreenDist + 1) / 2, 0);
-		boxCollider.size = new Vector2((laserEndOfScreenDist + 1), 0.5f);
-		
+		if(((0 <= eulerZ) && (eulerZ < 90)) || ((270 <= eulerZ) && (eulerZ < 360))) {
+			sizeX = screenWorldPoints.x - shield.transform.position.x;
+		} else {
+			sizeX = screenWorldPoints.x + shield.transform.position.x;
+		}
+
+		sizeY++; sizeX++;
+
+		newSize = Mathf.Lerp(sizeY, sizeX, Mathf.Abs(Mathf.Cos(Mathf.Deg2Rad * eulerZ)));
+
+		boxCollider.offset = new Vector2((newSize + 0.5f) / 2, 0);
+		boxCollider.size = new Vector2((newSize + 0.5f), 0.5f);
 	}
 
 	IEnumerator CheckEnd() {

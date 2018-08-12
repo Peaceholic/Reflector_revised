@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212939435728789080}
   - component: {fileID: 95811537518704856}
   - component: {fileID: 61953473258764492}
+  - component: {fileID: 114562232677656992}
   m_Layer: 0
   m_Name: Laser_Attack_0
   m_TagString: Untagged
@@ -59,7 +60,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0.5}
     oldSize: {x: 1.28, y: 1.28}
-    newSize: {x: 17.5, y: 1.28}
+    newSize: {x: 19, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
     adaptiveTiling: 0
@@ -84,6 +85,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114562232677656992
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1867756100815824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e3bb7a15e71249bc95e56abb16c28b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreAmount: 200
+  DieEffect: {fileID: 1475765197828686, guid: ec93efdfa70874b01bff16ed6225f629, type: 2}
 --- !u!212 &212939435728789080
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -123,7 +137,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 17.5, y: 1.28}
+  m_Size: {x: 19, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
