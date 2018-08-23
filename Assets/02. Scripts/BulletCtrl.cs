@@ -10,17 +10,12 @@ public class BulletCtrl : MonoBehaviour {
 	private Animator anim;
 	private PlayerCtrl player;
 	private ShieldCtrl shield;
-	private SpriteRenderer spriteRenderer;
-	private Renderer renderer;
 
 	void Start() {
 		boxCollider = GetComponent<BoxCollider2D>();
 		anim = GetComponent<Animator>();
 		player = GetComponentInParent<PlayerCtrl>();
 		shield = GetComponentInParent<ShieldCtrl>();
-		renderer = GetComponent<Renderer>();
-		spriteRenderer = GetComponent<SpriteRenderer>();
-
 
 		StartCoroutine(this.CheckEnd());
 	}

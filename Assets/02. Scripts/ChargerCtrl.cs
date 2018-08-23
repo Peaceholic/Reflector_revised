@@ -10,6 +10,12 @@ public enum MonsterState {
     Attack //Do special action(ex: fire bullets, etc.)
 };
 
+public enum ChargerAttackType {
+    Direct,
+    Explosion,
+    Discharge
+};
+
 public class ChargerCtrl : MonoBehaviour {
 
 	public float currentSpeed = 5.0f;
@@ -224,6 +230,33 @@ public class ChargerCtrl : MonoBehaviour {
         transform.Translate(moveDestination.normalized * attackSpeed * Time.deltaTime);
         StartCoroutine(DestroyOnOutOfScreen());
     }
+
+    public IEnumerator Direct() {
+		while(true) {
+
+            
+
+			yield return null;
+		}
+	}
+
+    public IEnumerator Explosion() {
+		while(true) {
+
+            
+
+			yield return null;
+		}
+	}
+
+    public IEnumerator Discharge() {
+		while(true) {
+
+            
+
+			yield return null;
+		}
+	}
 
     private  void MoveTo(Vector2 dest)
     {

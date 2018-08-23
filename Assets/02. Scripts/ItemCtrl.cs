@@ -20,15 +20,25 @@ public class ItemCtrl : MonoBehaviour {
 	
 	// Amount of health to restore
 	public int restoreAmount = 1;
+	
+	// Immune coroutine
+	private static Coroutine immuneCoroutine;
+	private static Coroutine multCoroutine;
 
 	public void ApplyItemEffect(PlayerCtrl player){
 		switch(itemType){
 			case ItemType.Immune:
-				player.StartCoroutine(player.ApplyImmune(immuneDuration));
+				if(player.immune == true) {
+					player.StopCoroutine(immuneCoroutine);
+				}
+				immuneCoroutine = player.StartCoroutine(player.ApplyImmune(immuneDuration));
 			break;
 
 			case ItemType.GaugeMult:
-				player.StartCoroutine(player.ApplyGaugeMult(gaugeMultiplier, gaugeMultDuration));
+				if(player.multiplied == true) {
+					player.StopCoroutine(multCoroutine);
+				}
+				multCoroutine = player.StartCoroutine(player.ApplyGaugeMult(gaugeMultiplier, gaugeMultDuration));
 			break;
 
 			case ItemType.HealthRegen:

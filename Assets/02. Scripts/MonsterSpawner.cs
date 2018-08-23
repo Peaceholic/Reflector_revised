@@ -12,7 +12,7 @@ public class MonsterSpawner : MonoBehaviour {
 
 	public void SpawnMonster() {
 		int r = Random.Range(0, 2);
-		if((chargerCount >= 3) || (r == 0)) {
+		if((chargerCount >= 2) || (r == 0)) {
 			SpawnShooter();
 		} else if(r == 1) {
 			SpawnCharger();

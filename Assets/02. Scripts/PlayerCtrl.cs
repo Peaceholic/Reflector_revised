@@ -50,6 +50,7 @@ public class PlayerCtrl : MonoBehaviour {
 	public bool isDead;
 	[HideInInspector]
 	public bool immune;
+	public bool multiplied;
 	public int maxHealth = 2;
 	public float maxEnergy = 3.0f;
 
@@ -70,6 +71,7 @@ public class PlayerCtrl : MonoBehaviour {
 		prevX = transform.position.x;
 		isDead = false;
 		immune = false;
+		multiplied = false;
 	}
 
 	void DoFlip() {
@@ -168,10 +170,12 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 	
 	public IEnumerator ApplyGaugeMult(float gaugeMultiplier, float gaugeMultDuration){
+		multiplied = true;
 		float multipliedFillAmount = fillEnergyAmount * gaugeMultiplier;
 		SetFillMult(multipliedFillAmount);
 		UIMgr.Instance.ChangeGaugeColor(Color.red);
 		yield return new WaitForSeconds(gaugeMultDuration);
+		multiplied = false;
 		SetFillMult(fillEnergyAmount);
 		UIMgr.Instance.ChangeGaugeColor(Color.white);
 	}

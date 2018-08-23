@@ -63,8 +63,8 @@ public class GameMgr : MonoBehaviour {
 			}
 		}
 	}
-	public float spawnTime = 7;
-    public float initialspawnTime = 5;
+	public float spawnTime = 4;
+    public float initialspawnTime = 2;
 	
 	// Lifespan of items
 	public float itemLifeSpan = 7f;
@@ -145,7 +145,7 @@ public class GameMgr : MonoBehaviour {
 
 		while(true) {
 			if(gamemode == GameModes.Playing) {
-				int seconds = Random.Range(0, 6) + 5;
+				int seconds = Random.Range(0, 5) + 4;
 				int mseconds = Random.Range(0, 100);
 				float itemSpawnTime = seconds + (float)mseconds / 100.0f;
 

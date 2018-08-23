@@ -2,18 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-enum EDirection{
+enum EDirection {
     Horizontal,
     Vertical
 }
+
+public enum ShooterAttackType {
+    Direct,
+    Circular,
+    SixWays
+}
+
 public class ShooterCtrl : MonoBehaviour {
-	public float moveSpeed = 5.0f;
-	public float attackSpeed = 7.0f;
-    public float attackFrequency = 5.0f;
+	public float moveSpeed = 7.0f;
+	public float directAttackSpeed = 7.0f;
+    public float circularAttackSpeed = 7.0f;
+    public float sixwaysAttackSpeed = 8.0f;
+    public float directAttackFrequency = 0.3f;
+    public float circularAttackFrequency = 0.3f;
+    public float sixwaysAttackFrequency = 5.0f;
     public float patrolEdgeRangeX = 0.1f;
     public float patrolEdgeRangeY = 0.05f;
 	public GameObject bulletPrefab;
     public float checkTime = 0.5f;
+    public ShooterAttackType shooterAttackType;
 
     private bool isDie = false;
     private Vector2 moveDirection;
@@ -29,9 +41,10 @@ public class ShooterCtrl : MonoBehaviour {
         if(player != null) {
 		    playerTr = player.GetComponent<Transform>();
         }
+        ChooseAttackStyle();
         SetDirection();
         StartCoroutine(Move());
-        StartCoroutine(Attack());
+        Attack();
 	}
 
     void SetDirection(){
@@ -72,6 +85,13 @@ public class ShooterCtrl : MonoBehaviour {
 
     }
 
+    void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.CompareTag("Player")) {
+            Instantiate(dieEffect, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+    }
+	
     IEnumerator Move(){
         while(!isDie){
             if(direction == EDirection.Horizontal){
@@ -96,23 +116,78 @@ public class ShooterCtrl : MonoBehaviour {
         }
     }
 
-    IEnumerator Attack(){
-        while(!isDie && (playerTr != null)) {
-            GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            Vector2 attackDir = playerTr.position - transform.position;
-            attackDir.Normalize();
-            bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * attackSpeed;
+    void ChooseAttackStyle() {
+        shooterAttackType = (ShooterAttackType)Random.Range(0, System.Enum.GetValues(typeof(ShooterAttackType)).Length);
+    }
 
-            Destroy(bulletObject, 8); // May erase after optimization
-            yield return new WaitForSeconds(attackFrequency);
+    void Attack() {
+        switch(shooterAttackType) {
+            case ShooterAttackType.Direct:
+            StartCoroutine(Direct());
+            break;
+
+            case ShooterAttackType.Circular:
+            StartCoroutine(Circular());
+            break;
+
+            case ShooterAttackType.SixWays:
+            StartCoroutine(SixWays());
+            break;
+
+            default:
+            break;
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other) {
-		if(other.gameObject.CompareTag("Player")) {
-            Instantiate(dieEffect, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+    public IEnumerator Direct() {
+		while(!isDie && (playerTr != null)) {
+            GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            Vector2 attackDir = playerTr.position - transform.position;
+            attackDir.Normalize();
+            bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * directAttackSpeed;
+
+            Destroy(bulletObject, 8); // May erase after optimization
+            yield return new WaitForSeconds(directAttackFrequency);
+        }
+	}
+
+	public IEnumerator Circular() {
+		while(!isDie && (playerTr != null)) {
+            if(direction == EDirection.Vertical) {
+                
+            } else if (direction == EDirection.Horizontal) {
+
+            }
+			
+
+			yield return null;
 		}
 	}
 
+    public IEnumerator SixWays() {
+		while(!isDie && (playerTr != null)) {
+            GameObject[] bulletObject = new GameObject[6];
+            Vector2 dir = new Vector2(0, 0);
+            if(direction == EDirection.Vertical) {
+                dir.y -= 3.0f;
+            } else if (direction == EDirection.Horizontal) {
+                dir.x -= 3.5f;
+            }
+            for(int i=0 ; i<6 ; i++) {
+                bulletObject[i] = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                Vector2 attackDir = playerTr.position - transform.position;
+                attackDir += dir;
+                attackDir.Normalize();
+                bulletObject[i].GetComponent<Rigidbody2D>().velocity = attackDir * sixwaysAttackSpeed;
+                
+                if(direction == EDirection.Vertical) {
+                    dir.y += 1.2f;
+                } else if (direction == EDirection.Horizontal) {
+                    dir.x += 1.4f;
+                }
+            }
+            
+			yield return new WaitForSeconds(sixwaysAttackFrequency);
+		}
+	}
 }
