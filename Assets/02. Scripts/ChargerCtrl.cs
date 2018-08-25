@@ -71,7 +71,6 @@ public class ChargerCtrl : MonoBehaviour {
 
         // Starting to pursue player
         ChooseAttackStyle();
-        chargerAttackType = ChargerAttackType.Discharge;
         StartCoroutine(this.CheckState());
         StartCoroutine(this.DoAction());
         currentState = MonsterState.Move;
