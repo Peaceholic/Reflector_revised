@@ -32,19 +32,20 @@ public class ChargerCtrl : MonoBehaviour {
     public float patrolDist = 3.0f;
     public float checkTime = 0.5f;
     public float explosionTime = 2.0f;
-    public float dischargeTime = 1.0f;
+    public float dischargeTime = 3.0f;
+    public float bulletAttackSpeed = 5.0f;
 
 	private bool isDie = false;
     private bool isArrived = false;
 
-    private ChargerAttackType chargerAttackType;
+    public ChargerAttackType chargerAttackType;
 
     float currentPatrolTime;
     // Used when move state
     private Vector2 moveDestination;
     private SpriteRenderer spriteRenderer;
 	private Transform playerTr;
-
+    
     private float prevX;
     private float curX;
 
@@ -53,6 +54,11 @@ public class ChargerCtrl : MonoBehaviour {
 
     // Charger explosion attack effect
     public GameObject explosionEffect;
+
+    // Charger discharge bullet
+    public GameObject bulletPrefab;
+    private Vector2[] dischargeLoc;
+    private int dischargeAmt = 12;
 
     // Use this for initialization
     private void Start () {
@@ -65,7 +71,18 @@ public class ChargerCtrl : MonoBehaviour {
         }
 
         // Starting to pursue player
-        ChooseAttackStyle();        StartCoroutine(this.CheckState());
+        ChooseAttackStyle();
+        chargerAttackType = ChargerAttackType.Discharge;
+        if(chargerAttackType == ChargerAttackType.Discharge) {
+            dischargeLoc = new Vector2[dischargeAmt];
+            var locDif = 30;
+            int currentAngle = 0;
+            for(int i=0 ; i<dischargeAmt ; i++) {
+                dischargeLoc[i] = new Vector2(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle));
+                currentAngle += locDif;
+            }
+        }
+        StartCoroutine(this.CheckState());
         StartCoroutine(this.DoAction());
         currentState = MonsterState.Move;
         currentPatrolTime = patrolFrequency;
@@ -167,7 +184,7 @@ public class ChargerCtrl : MonoBehaviour {
 
     private void ActIdle()
     {
-        
+        ActPatrol();
     }
 
     private void ActMove()
@@ -245,6 +262,7 @@ public class ChargerCtrl : MonoBehaviour {
 
             case ChargerAttackType.Discharge:
             StartCoroutine(Discharge());
+            currentState = MonsterState.Idle;
             break;
         }
     }
@@ -263,13 +281,25 @@ public class ChargerCtrl : MonoBehaviour {
 	}
 
     IEnumerator Discharge() {
+
         spriteRenderer.sprite = attackSp;
+        var temp = currentSpeed;
+        currentSpeed /= 3;
+
         yield return new WaitForSeconds(dischargeTime);
 
-        Vector2[] dischargeLoc = new Vector2[12];
+        for(int i=0 ; i<dischargeAmt ; i++) {
+            GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            bulletObject.GetComponent<Rigidbody2D>().velocity = dischargeLoc[i] * bulletAttackSpeed;
 
+            Destroy(bulletObject, 8); // May erase after optimization
+        }
 
         spriteRenderer.sprite = patrolSp;
+        var restTime = 2.0f;
+        yield return new WaitForSeconds(restTime);
+
+        currentSpeed = temp;
         currentState = MonsterState.Patrol;
 	}
 
