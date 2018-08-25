@@ -34,6 +34,7 @@ public class ChargerCtrl : MonoBehaviour {
     public float explosionTime = 2.0f;
     public float dischargeTime = 3.0f;
     public float bulletAttackSpeed = 5.0f;
+    public int dischargeAmt = 12;
 
 	private bool isDie = false;
     private bool isArrived = false;
@@ -57,8 +58,6 @@ public class ChargerCtrl : MonoBehaviour {
 
     // Charger discharge bullet
     public GameObject bulletPrefab;
-    private Vector2[] dischargeLoc;
-    private int dischargeAmt = 12;
 
     // Use this for initialization
     private void Start () {
@@ -73,15 +72,6 @@ public class ChargerCtrl : MonoBehaviour {
         // Starting to pursue player
         ChooseAttackStyle();
         chargerAttackType = ChargerAttackType.Discharge;
-        if(chargerAttackType == ChargerAttackType.Discharge) {
-            dischargeLoc = new Vector2[dischargeAmt];
-            var locDif = 30;
-            int currentAngle = 0;
-            for(int i=0 ; i<dischargeAmt ; i++) {
-                dischargeLoc[i] = new Vector2(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle));
-                currentAngle += locDif;
-            }
-        }
         StartCoroutine(this.CheckState());
         StartCoroutine(this.DoAction());
         currentState = MonsterState.Move;
@@ -288,11 +278,15 @@ public class ChargerCtrl : MonoBehaviour {
 
         yield return new WaitForSeconds(dischargeTime);
 
+        int locDif = 360 / dischargeAmt;
+        int angle = 0;
         for(int i=0 ; i<dischargeAmt ; i++) {
+            Vector2 attackDir = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
             GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            bulletObject.GetComponent<Rigidbody2D>().velocity = dischargeLoc[i] * bulletAttackSpeed;
+            bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * bulletAttackSpeed;
 
             Destroy(bulletObject, 8); // May erase after optimization
+            angle += locDif;
         }
 
         spriteRenderer.sprite = patrolSp;
