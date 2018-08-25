@@ -139,7 +139,7 @@ public class ShooterCtrl : MonoBehaviour {
         }
     }
 
-    public IEnumerator Direct() {
+    IEnumerator Direct() {
 		while(!isDie && (playerTr != null)) {
             GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             Vector2 attackDir = playerTr.position - transform.position;
@@ -151,7 +151,7 @@ public class ShooterCtrl : MonoBehaviour {
         }
 	}
 
-	public IEnumerator Circular() {
+	IEnumerator Circular() {
 		while(!isDie && (playerTr != null)) {
             if(direction == EDirection.Vertical) {
                 
@@ -164,7 +164,7 @@ public class ShooterCtrl : MonoBehaviour {
 		}
 	}
 
-    public IEnumerator SixWays() {
+    IEnumerator SixWays() {
 		while(!isDie && (playerTr != null)) {
             GameObject[] bulletObject = new GameObject[6];
             Vector2 dir = new Vector2(0, 0);

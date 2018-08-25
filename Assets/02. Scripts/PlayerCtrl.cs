@@ -142,7 +142,7 @@ public class PlayerCtrl : MonoBehaviour {
 		CurrentHealth = maxHealth;
 	}
 
-	void ReceiveDamage(int amount){
+	public void ReceiveDamage(int amount){
 		if(immune) {
 			return;
 		}

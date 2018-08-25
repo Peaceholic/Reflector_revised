@@ -24,15 +24,20 @@ public class ChargerCtrl : MonoBehaviour {
     public float patrolFrequency = 2f;
 	
 	public MonsterState currentState = MonsterState.Idle;
-    public Sprite sp;
+    public Sprite attackSp;
+    public Sprite patrolSp;
 
 	// attack radius of the monster
     public float attackDist = 10.0f;
     public float patrolDist = 3.0f;
     public float checkTime = 0.5f;
+    public float explosionTime = 2.0f;
+    public float dischargeTime = 1.0f;
 
 	private bool isDie = false;
     private bool isArrived = false;
+
+    private ChargerAttackType chargerAttackType;
 
     float currentPatrolTime;
     // Used when move state
@@ -43,8 +48,11 @@ public class ChargerCtrl : MonoBehaviour {
     private float prevX;
     private float curX;
 
-    // Player die effect
+    // Charger die effect
     public GameObject dieEffect;
+
+    // Charger explosion attack effect
+    public GameObject explosionEffect;
 
     // Use this for initialization
     private void Start () {
@@ -57,7 +65,7 @@ public class ChargerCtrl : MonoBehaviour {
         }
 
         // Starting to pursue player
-        StartCoroutine(this.CheckState());
+        ChooseAttackStyle();        StartCoroutine(this.CheckState());
         StartCoroutine(this.DoAction());
         currentState = MonsterState.Move;
         currentPatrolTime = patrolFrequency;
@@ -92,7 +100,7 @@ public class ChargerCtrl : MonoBehaviour {
     }
 
 	// Check current state every designated time
-	private  IEnumerator CheckState() {
+	private IEnumerator CheckState() {
 		while(!isDie && playerTr != null) {
             switch (currentState)
             {
@@ -126,7 +134,7 @@ public class ChargerCtrl : MonoBehaviour {
         }
     }
 
-    private  IEnumerator DoAction() {
+    private IEnumerator DoAction() {
 
 		while(!isDie && playerTr != null) {
 			switch(currentState) {
@@ -157,12 +165,12 @@ public class ChargerCtrl : MonoBehaviour {
 		}
 	}
 
-    private  void ActIdle()
+    private void ActIdle()
     {
         
     }
 
-    private  void ActMove()
+    private void ActMove()
     {
         MoveTo(playerTr.position);
         Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
@@ -172,13 +180,13 @@ public class ChargerCtrl : MonoBehaviour {
 
     }
 
-    private  void ActChase()
+    private void ActChase()
     {
         MoveTo(playerTr.position);
     }
 
  
-    private  void ActPatrol()
+    private void ActPatrol()
     {
         //Set MoveDestination
         currentPatrolTime += Time.deltaTime;
@@ -224,41 +232,52 @@ public class ChargerCtrl : MonoBehaviour {
         }
     }
 
-    private  void ActAttack()
+    private void ActAttack()
     {
-        spriteRenderer.sprite = sp;
-        transform.Translate(moveDestination.normalized * attackSpeed * Time.deltaTime);
-        StartCoroutine(DestroyOnOutOfScreen());
+        switch(chargerAttackType) {
+            case ChargerAttackType.Direct:
+            Direct();
+            break;
+
+            case ChargerAttackType.Explosion:
+            StartCoroutine(Explosion());
+            break;
+
+            case ChargerAttackType.Discharge:
+            StartCoroutine(Discharge());
+            break;
+        }
     }
 
-    public IEnumerator Direct() {
-		while(true) {
-
-            
-
-			yield return null;
-		}
+    void Direct() {
+        spriteRenderer.sprite = attackSp;
+        transform.Translate(moveDestination.normalized * attackSpeed * Time.deltaTime);
+        StartCoroutine(DestroyOnOutOfScreen());
 	}
 
-    public IEnumerator Explosion() {
-		while(true) {
-
-            
-
-			yield return null;
-		}
+    IEnumerator Explosion() {
+        spriteRenderer.sprite = attackSp;
+        yield return new WaitForSeconds(explosionTime);
+        Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        Die();
 	}
 
-    public IEnumerator Discharge() {
-		while(true) {
+    IEnumerator Discharge() {
+        spriteRenderer.sprite = attackSp;
+        yield return new WaitForSeconds(dischargeTime);
 
-            
+        Vector2[] dischargeLoc = new Vector2[12];
 
-			yield return null;
-		}
+
+        spriteRenderer.sprite = patrolSp;
+        currentState = MonsterState.Patrol;
 	}
 
-    private  void MoveTo(Vector2 dest)
+    void ChooseAttackStyle() {
+        chargerAttackType = (ChargerAttackType)Random.Range(0, System.Enum.GetValues(typeof(ChargerAttackType)).Length);
+    }
+
+    private void MoveTo(Vector2 dest)
     {
         Vector2 moveDir = (dest - (Vector2)transform.position).normalized;
         transform.Translate(moveDir * currentSpeed * Time.deltaTime);
@@ -266,7 +285,7 @@ public class ChargerCtrl : MonoBehaviour {
 
     public void Die()
     {
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 
 
