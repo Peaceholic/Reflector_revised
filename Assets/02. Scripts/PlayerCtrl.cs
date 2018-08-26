@@ -57,7 +57,7 @@ public class PlayerCtrl : MonoBehaviour {
 	public float moveSpeed = 5.0f;
 	public float fillEnergyAmount = 0.1f;
 	public float currentFillEnergyAmount = 0.1f;
-	public float energyUseRate = 0.12f;
+	public float energyUseRate = 0.15f;
 	public GameObject deathEffect;
 
 	private JoystickPlayer joystick;

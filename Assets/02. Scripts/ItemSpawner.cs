@@ -19,8 +19,8 @@ public class ItemSpawner : MonoBehaviour {
     private GameObject InstantiateItem(int index){
         Vector3 screenPointPos = new Vector3(0, 0, 0);
 
-        float position1 = (float)(Random.Range(2, 6) + 1.5) / 10.0f;
-        float position2 = (float)(Random.Range(2, 6) + 1.5) / 10.0f;
+        float position1 = (float)(Random.Range(20, 60) + 15) / 100.0f;
+        float position2 = (float)(Random.Range(20, 60) + 15) / 100.0f;
 
         screenPointPos = new Vector3(position1 * Screen.width, position2 * Screen.height, 10.0f);
 
