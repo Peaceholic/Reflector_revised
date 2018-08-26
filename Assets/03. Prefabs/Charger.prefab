@@ -99,8 +99,14 @@ MonoBehaviour:
   attackDist: 10
   patrolDist: 3
   checkTime: 0.5
+  explosionTime: 2
+  dischargeTime: 1
+  bulletAttackSpeed: 5
+  chargerAttackType: 0
   dieEffect: {fileID: 1475765197828686, guid: ec93efdfa70874b01bff16ed6225f629, type: 2}
   explosionEffect: {fileID: 1261696716759420, guid: 9efdeb4a5afdc8b4587484384d331fb3,
+    type: 2}
+  bulletPrefab: {fileID: 1774897074528660, guid: 2fa4867e2b5f04073b1bf367191d6b9e,
     type: 2}
 --- !u!212 &212826501245177968
 SpriteRenderer:

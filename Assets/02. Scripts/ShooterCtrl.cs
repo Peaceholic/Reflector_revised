@@ -17,10 +17,10 @@ public class ShooterCtrl : MonoBehaviour {
 	public float moveSpeed = 7.0f;
 	public float directAttackSpeed = 7.0f;
     public float circularAttackSpeed = 7.0f;
-    public float sixwaysAttackSpeed = 8.0f;
+    public float sixwaysAttackSpeed = 6.0f;
     public float directAttackFrequency = 0.3f;
     public float circularAttackFrequency = 0.3f;
-    public float sixwaysAttackFrequency = 5.0f;
+    public float sixwaysAttackFrequency = 3.5f;
     public float patrolEdgeRangeX = 0.1f;
     public float patrolEdgeRangeY = 0.05f;
 	public GameObject bulletPrefab;

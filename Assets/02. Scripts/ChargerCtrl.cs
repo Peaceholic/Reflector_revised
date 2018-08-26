@@ -31,7 +31,7 @@ public class ChargerCtrl : MonoBehaviour {
     public float attackDist = 10.0f;
     public float patrolDist = 3.0f;
     public float checkTime = 0.5f;
-    public float explosionTime = 2.0f;
+    public float explosionTime = 1.0f;
     public float dischargeTime = 3.0f;
     public float bulletAttackSpeed = 5.0f;
     public int dischargeAmt = 12;
