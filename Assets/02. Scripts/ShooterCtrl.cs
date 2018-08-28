@@ -9,18 +9,30 @@ enum EDirection {
 
 public enum ShooterAttackType {
     Direct,
-    Circular,
+    RandomAttack,
+    ConsecutiveBullets,
     SixWays
 }
 
 public class ShooterCtrl : MonoBehaviour {
+
 	public float moveSpeed = 7.0f;
+
+    // Bullet attack speed
 	public float directAttackSpeed = 7.0f;
-    public float circularAttackSpeed = 7.0f;
+    public float randomAttackSpeed = 7.0f;
+    public float consecutiveAttackSpeed = 6.0f;
     public float sixwaysAttackSpeed = 6.0f;
+
+    // Bullet attack frequency
     public float directAttackFrequency = 0.3f;
-    public float circularAttackFrequency = 0.3f;
+    public float randomAttackFrequency = 0.3f;
+    public float consecutiveAttackFrequency = 1.0f;
     public float sixwaysAttackFrequency = 3.5f;
+
+
+    public int numOfConsecutiveBullets = 5;
+
     public float patrolEdgeRangeX = 0.1f;
     public float patrolEdgeRangeY = 0.05f;
 	public GameObject bulletPrefab;
@@ -42,6 +54,7 @@ public class ShooterCtrl : MonoBehaviour {
 		    playerTr = player.GetComponent<Transform>();
         }
         ChooseAttackStyle();
+        shooterAttackType = ShooterAttackType.RandomAttack;
         SetDirection();
         StartCoroutine(Move());
         Attack();
@@ -69,13 +82,13 @@ public class ShooterCtrl : MonoBehaviour {
         }
 
         if(x > y){
-            float r = Random.Range(-1, 1);
+            float r = UnityEngine.Random.Range(-1, 1);
             r = (r == 0) ? -1 : 1;
             moveDirection = new Vector2(0, r / Mathf.Abs(r));
             direction = EDirection.Vertical;
         }
         else{
-            float r = Random.Range(-1, 1);
+            float r = UnityEngine.Random.Range(-1, 1);
             r = (r == 0) ? -1 : 1;
             moveDirection = new Vector2(r / Mathf.Abs(r), 0);
             direction = EDirection.Horizontal;
@@ -117,7 +130,7 @@ public class ShooterCtrl : MonoBehaviour {
     }
 
     void ChooseAttackStyle() {
-        shooterAttackType = (ShooterAttackType)Random.Range(0, System.Enum.GetValues(typeof(ShooterAttackType)).Length);
+        shooterAttackType = (ShooterAttackType)UnityEngine.Random.Range(0, System.Enum.GetValues(typeof(ShooterAttackType)).Length);
     }
 
     void Attack() {
@@ -126,8 +139,12 @@ public class ShooterCtrl : MonoBehaviour {
             StartCoroutine(Direct());
             break;
 
-            case ShooterAttackType.Circular:
-            StartCoroutine(Circular());
+            case ShooterAttackType.RandomAttack:
+            StartCoroutine(RandomAttack());
+            break;
+
+            case ShooterAttackType.ConsecutiveBullets:
+            StartCoroutine(ConsecutiveBullets());
             break;
 
             case ShooterAttackType.SixWays:
@@ -151,16 +168,48 @@ public class ShooterCtrl : MonoBehaviour {
         }
 	}
 
-	IEnumerator Circular() {
+	IEnumerator RandomAttack() {
 		while(!isDie && (playerTr != null)) {
+            GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            Vector2 attackDir = playerTr.position - transform.position;
+            int angle = Random.Range(0, 180);
             if(direction == EDirection.Vertical) {
-                
-            } else if (direction == EDirection.Horizontal) {
+                attackDir.y += Mathf.Cos(Mathf.Deg2Rad * angle) * 5;
+            } else {
+                attackDir.x += Mathf.Cos(Mathf.Deg2Rad * angle) * 5;
+            }
+            attackDir.Normalize();
+            bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * directAttackSpeed;
+
+            Destroy(bulletObject, 8); // May erase after optimization
+            yield return new WaitForSeconds(directAttackFrequency);
+        }
+	}
+
+    IEnumerator ConsecutiveBullets() {
+		while(!isDie && (playerTr != null)) {
+            for(int i=0 ; i<numOfConsecutiveBullets ; i++) {
+                GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                Vector2 attackDir = new Vector2(0, 0);
+                if(direction == EDirection.Vertical) {
+                    if(transform.position.x < 0) {
+                        attackDir.x += 1;
+                        bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * consecutiveAttackSpeed;    
+                    } else {
+                        attackDir.x -= 1;
+                        bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * consecutiveAttackSpeed;
+
+                    }
+                } else if (direction == EDirection.Horizontal) {
+                    attackDir.y -= 1;
+                    bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * consecutiveAttackSpeed;
+                }
+
+                yield return new WaitForSeconds(0.06f);
 
             }
-			
 
-			yield return null;
+			yield return new WaitForSeconds(consecutiveAttackFrequency);
 		}
 	}
 
