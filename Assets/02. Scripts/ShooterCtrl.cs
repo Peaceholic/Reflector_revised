@@ -54,7 +54,6 @@ public class ShooterCtrl : MonoBehaviour {
 		    playerTr = player.GetComponent<Transform>();
         }
         ChooseAttackStyle();
-        shooterAttackType = ShooterAttackType.RandomAttack;
         SetDirection();
         StartCoroutine(Move());
         Attack();
