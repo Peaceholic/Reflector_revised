@@ -265,6 +265,9 @@ public class ChargerCtrl : MonoBehaviour {
     IEnumerator Explosion() {
         spriteRenderer.sprite = attackSp;
         yield return new WaitForSeconds(explosionTime);
+        currentSpeed = 4.5f;
+        MoveTo(playerTr.position);
+        yield return new WaitForSeconds(1.0f);
         Instantiate(explosionEffect, transform.position, Quaternion.identity);
         Die();
 	}
