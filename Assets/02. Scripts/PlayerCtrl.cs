@@ -50,6 +50,8 @@ public class PlayerCtrl : MonoBehaviour {
 	public bool isDead;
 	[HideInInspector]
 	public bool immune;
+	[HideInInspector]
+	public bool isHit;
 	public bool multiplied;
 	public int maxHealth = 2;
 	public float maxEnergy = 3.0f;
@@ -71,6 +73,7 @@ public class PlayerCtrl : MonoBehaviour {
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		prevX = transform.position.x;
 		isDead = false;
+		isHit = false;
 		immune = false;
 		multiplied = false;
 	}
@@ -144,7 +147,7 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	public void ReceiveDamage(int amount){
-		if(immune) {
+		if(immune || isHit) {
 			return;
 		}
 		StartCoroutine(ImmuneOnDamage(3.0f));
@@ -214,9 +217,9 @@ public class PlayerCtrl : MonoBehaviour {
 
 		spriteRenderer.color = Color.gray;
 		StartCoroutine(setBlinkEffect(duration));
-		immune = true;
+		isHit = true;
 		yield return new WaitForSeconds(duration);
-		immune = false;
+		isHit = false;
 		spriteRenderer.color = new Color(1.0f , 1.0f , 1.0f);
 	}
 }
