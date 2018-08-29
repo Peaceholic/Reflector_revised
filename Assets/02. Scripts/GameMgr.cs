@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameModes {Title, Playing, Paused, GameOver};
+public enum GameModes {Title, Playing, Paused, GameOver, Guide, Highscores, Credits};
 
 public class GameMgr : MonoBehaviour {
 	private static GameMgr instance;
@@ -46,6 +46,18 @@ public class GameMgr : MonoBehaviour {
 					UIMgr.Instance.PauseUI();
 					break;
 
+				case GameModes.Guide:
+					UIMgr.Instance.GuideUI();
+					break;
+
+				case GameModes.Highscores:
+					UIMgr.Instance.HighscoresUI();
+					break;
+
+				case GameModes.Credits:
+					UIMgr.Instance.CreditsUI();
+					break;
+			
 				case GameModes.GameOver:
 
 					if(PlayerPrefs.HasKey("GameScore")){
