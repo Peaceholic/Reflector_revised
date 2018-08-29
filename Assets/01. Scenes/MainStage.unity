@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: 92609584}
   - component: {fileID: 92609583}
   - component: {fileID: 92609582}
+  - component: {fileID: 92609585}
   m_Layer: 0
   m_Name: Shield_0
   m_TagString: Shield
@@ -545,7 +546,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 80544f189bfcb45d8b1d202d2694a1ad, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -562,8 +563,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -679713845
-  m_SortingLayer: 0
+  m_SortingLayerID: -921551953
+  m_SortingLayer: 1
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: dcd218c4da983a747b50c1bc4a99bab6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -576,6 +577,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &92609585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 92609580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fc18f891332264a890b1c322d8f542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &122505635
 GameObject:
   m_ObjectHideFlags: 0

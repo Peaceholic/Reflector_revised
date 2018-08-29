@@ -61,6 +61,7 @@ public class PlayerCtrl : MonoBehaviour {
 	public GameObject deathEffect;
 
 	private JoystickPlayer joystick;
+	private static Coroutine effect;
 
 	void Start()
 	{
@@ -146,6 +147,7 @@ public class PlayerCtrl : MonoBehaviour {
 		if(immune) {
 			return;
 		}
+		StartCoroutine(ImmuneOnDamage(3.0f));
 		CurrentHealth -= amount;
 		
 	}
@@ -164,6 +166,7 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	public IEnumerator ApplyImmune(float immuneDuration){
+		StartCoroutine(setBlinkEffect(immuneDuration));
 		immune = true;
 		yield return new WaitForSeconds(immuneDuration);
 		immune = false;
@@ -191,5 +194,29 @@ public class PlayerCtrl : MonoBehaviour {
 		} else {
 			CurrentHealth = tempHealth;
 		}
+	}
+
+	IEnumerator setBlinkEffect(float duration) {
+		float r = ((float)Random.Range(0, 2) + 5.0f) / 10.0f;
+		if(immune == true) {
+			StopCoroutine(effect);
+		}
+		effect = StartCoroutine(ShooterEffect.UnBeatTime(spriteRenderer, 0.3f));
+		yield return new WaitForSeconds(duration * r);
+		StopCoroutine(effect);
+		effect = StartCoroutine(ShooterEffect.UnBeatTime(spriteRenderer, 3.0f));
+		yield return new WaitForSeconds(duration * (1 - r));
+		StopCoroutine(effect);
+		ShooterEffect.SetToNormal(spriteRenderer);
+	}
+
+	IEnumerator ImmuneOnDamage(float duration) {
+
+		spriteRenderer.color = Color.gray;
+		StartCoroutine(setBlinkEffect(duration));
+		immune = true;
+		yield return new WaitForSeconds(duration);
+		immune = false;
+		spriteRenderer.color = new Color(1.0f , 1.0f , 1.0f);
 	}
 }
