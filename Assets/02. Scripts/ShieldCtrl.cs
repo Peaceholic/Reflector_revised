@@ -142,7 +142,7 @@ public class ShieldCtrl : MonoBehaviour {
 			} else {
 			player.CurrentEnergy = filledEnergy;
 			}
-			Destroy(coll.gameObject);
+			ObjectPool.Instance.DestroyObject(coll.gameObject);
 		}
 	}
 

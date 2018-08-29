@@ -284,10 +284,10 @@ public class ChargerCtrl : MonoBehaviour {
         int angle = 0;
         for(int i=0 ; i<dischargeAmt ; i++) {
             Vector2 attackDir = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-            GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            GameObject bulletObject = ObjectPool.Instance.CreateObject(0, transform.position, Quaternion.identity);
             bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * bulletAttackSpeed;
 
-            Destroy(bulletObject, 8); // May erase after optimization
+            ObjectPool.Instance.DestroyObject(bulletObject, 8);
             angle += locDif;
         }
 

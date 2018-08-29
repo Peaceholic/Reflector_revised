@@ -157,19 +157,19 @@ public class ShooterCtrl : MonoBehaviour {
 
     IEnumerator Direct() {
 		while(!isDie && (playerTr != null)) {
-            GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            GameObject bulletObject = ObjectPool.Instance.CreateObject(0, transform.position, Quaternion.identity);
             Vector2 attackDir = playerTr.position - transform.position;
             attackDir.Normalize();
             bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * directAttackSpeed;
 
-            Destroy(bulletObject, 8); // May erase after optimization
+            ObjectPool.Instance.DestroyObject(bulletObject, 8);
             yield return new WaitForSeconds(directAttackFrequency);
         }
 	}
 
 	IEnumerator RandomAttack() {
 		while(!isDie && (playerTr != null)) {
-            GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            GameObject bulletObject = ObjectPool.Instance.CreateObject(0, transform.position, Quaternion.identity);
             Vector2 attackDir = playerTr.position - transform.position;
             int angle = Random.Range(0, 180);
             if(direction == EDirection.Vertical) {
@@ -180,7 +180,7 @@ public class ShooterCtrl : MonoBehaviour {
             attackDir.Normalize();
             bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * directAttackSpeed;
 
-            Destroy(bulletObject, 8); // May erase after optimization
+            ObjectPool.Instance.DestroyObject(bulletObject, 8);
             yield return new WaitForSeconds(directAttackFrequency);
         }
 	}
@@ -188,7 +188,7 @@ public class ShooterCtrl : MonoBehaviour {
     IEnumerator ConsecutiveBullets() {
 		while(!isDie && (playerTr != null)) {
             for(int i=0 ; i<numOfConsecutiveBullets ; i++) {
-                GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                GameObject bulletObject = ObjectPool.Instance.CreateObject(0, transform.position, Quaternion.identity);
                 Vector2 attackDir = new Vector2(0, 0);
                 if(direction == EDirection.Vertical) {
                     if(transform.position.x < 0) {
@@ -203,6 +203,8 @@ public class ShooterCtrl : MonoBehaviour {
                     attackDir.y -= 1;
                     bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * consecutiveAttackSpeed;
                 }
+
+                ObjectPool.Instance.DestroyObject(bulletObject, 8);
 
                 yield return new WaitForSeconds(0.06f);
 
@@ -222,7 +224,7 @@ public class ShooterCtrl : MonoBehaviour {
                 dir.x -= 3.5f;
             }
             for(int i=0 ; i<6 ; i++) {
-                bulletObject[i] = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                bulletObject[i] = ObjectPool.Instance.CreateObject(0, transform.position, Quaternion.identity);
                 Vector2 attackDir = playerTr.position - transform.position;
                 attackDir += dir;
                 attackDir.Normalize();
@@ -233,6 +235,8 @@ public class ShooterCtrl : MonoBehaviour {
                 } else if (direction == EDirection.Horizontal) {
                     dir.x += 1.4f;
                 }
+
+                ObjectPool.Instance.DestroyObject(bulletObject[i], 8);
             }
             
 			yield return new WaitForSeconds(sixwaysAttackFrequency);

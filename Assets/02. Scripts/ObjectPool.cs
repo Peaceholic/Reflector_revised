@@ -31,6 +31,7 @@ public class ObjectPool : MonoBehaviour {
     
     void Awake()
     {
+        DontDestroyOnLoad(this.gameObject);
         //Singleton 초기화
         if(instance == null){
             instance = this;
@@ -93,6 +94,27 @@ public class ObjectPool : MonoBehaviour {
         }
         else{
             Destroy(destObject);
+        }
+    }
+
+    public void DestroyObject(GameObject wantToDestroy, float time){
+        var destObject = 
+        (from dList in poolGameObjectList
+        from dObj in dList
+        where dObj == wantToDestroy
+        select dObj).FirstOrDefault();
+
+        StartCoroutine(DestroyTimer(destObject, time));
+    }
+
+    private IEnumerator DestroyTimer(GameObject wantToDestroy, float time){
+        yield return new WaitForSeconds(time);
+
+        if(wantToDestroy != null){
+            wantToDestroy.SetActive(false);
+        }
+        else{
+            Destroy(wantToDestroy, time);
         }
     }
 

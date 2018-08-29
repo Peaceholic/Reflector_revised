@@ -2670,6 +2670,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114082334123939432, guid: d8265d7b0ac799f4a985595e6e5a2985,
+        type: 2}
+      propertyPath: poolList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4995788638901084, guid: d8265d7b0ac799f4a985595e6e5a2985, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2701,6 +2706,17 @@ Prefab:
     - target: {fileID: 4995788638901084, guid: d8265d7b0ac799f4a985595e6e5a2985, type: 2}
       propertyPath: m_RootOrder
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114082334123939432, guid: d8265d7b0ac799f4a985595e6e5a2985,
+        type: 2}
+      propertyPath: poolList.Array.data[0].poolPrefab
+      value: 
+      objectReference: {fileID: 1774897074528660, guid: 2fa4867e2b5f04073b1bf367191d6b9e,
+        type: 2}
+    - target: {fileID: 114082334123939432, guid: d8265d7b0ac799f4a985595e6e5a2985,
+        type: 2}
+      propertyPath: poolList.Array.data[0].poolAmount
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8265d7b0ac799f4a985595e6e5a2985, type: 2}
@@ -3985,7 +4001,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -0.2159729}
+  m_SizeDelta: {x: -0.12219238, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2040111452
 MonoBehaviour:
