@@ -8,15 +8,15 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
+  m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1134057700193030}
-  m_IsPrefabParent: 1
+  m_IsPrefabAsset: 1
 --- !u!1 &1134057700193030
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4908074812153602}
   - component: {fileID: 212826501245177968}
@@ -33,7 +33,7 @@ GameObject:
 --- !u!4 &4908074812153602
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134057700193030}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -47,7 +47,7 @@ Transform:
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134057700193030}
   m_BodyType: 0
@@ -66,7 +66,7 @@ Rigidbody2D:
 --- !u!58 &58933791639076736
 CircleCollider2D:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134057700193030}
   m_Enabled: 1
@@ -81,7 +81,7 @@ CircleCollider2D:
 --- !u!114 &114542476434940082
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134057700193030}
   m_Enabled: 1
@@ -94,15 +94,25 @@ MonoBehaviour:
   checkFrequency: 0.1
   patrolFrequency: 2
   currentState: 0
-  sp: {fileID: 21300002, guid: 82300fce3b3058b40976e33e24ba7f57, type: 3}
+  attackSp: {fileID: 21300002, guid: 82300fce3b3058b40976e33e24ba7f57, type: 3}
+  patrolSp: {fileID: 21300000, guid: 82300fce3b3058b40976e33e24ba7f57, type: 3}
   attackDist: 10
   patrolDist: 3
   checkTime: 0.5
+  explosionTime: 1
+  dischargeTime: 1
+  bulletAttackSpeed: 5
+  dischargeAmt: 36
+  chargerAttackType: 0
   dieEffect: {fileID: 1475765197828686, guid: ec93efdfa70874b01bff16ed6225f629, type: 2}
+  explosionEffect: {fileID: 1261696716759420, guid: 9efdeb4a5afdc8b4587484384d331fb3,
+    type: 2}
+  bulletPrefab: {fileID: 1774897074528660, guid: 2fa4867e2b5f04073b1bf367191d6b9e,
+    type: 2}
 --- !u!212 &212826501245177968
 SpriteRenderer:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134057700193030}
   m_Enabled: 1
@@ -112,6 +122,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
@@ -143,3 +154,4 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+  m_SpriteSortPoint: 0

@@ -7,18 +7,15 @@ public class ShieldCtrl : MonoBehaviour {
 
     public float movSpeed = 20.0f;
 	public float attackSpeed = 20.0f;
-	public GameObject[] bulletPrefab;
-	
+	public GameObject laserPrefab;
+
 	private Transform parentTr;
 	private float mouseX;
 	private float mouseY;
-	private const float distance = 1.7f;
+	private const float distance = 1f;
 	private JoystickShield joystick;
 	private PlayerCtrl player;
-
-
-
-
+		
 	// Use this for initialization
 	void Start () {
 		// get parent's transform component
@@ -50,7 +47,7 @@ public class ShieldCtrl : MonoBehaviour {
 
 		// Keeps distance between character and shield
 		float distBetweenTwo = Vector3.SqrMagnitude(parentTr.position - transform.position);
-		if(distance != distBetweenTwo) {
+		if(distance*distance != distBetweenTwo) {
 			transform.position = (transform.position - parentTr.position).normalized * distance + parentTr.position;
 		}
 
@@ -77,6 +74,34 @@ public class ShieldCtrl : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0, 0, rotDeg);
 	}
 
+	IEnumerator Attack() {
+		while(true) {
+			player.CurrentEnergy -= player.energyUseRate;
+			yield return new WaitForSeconds(0.1f);
+
+			if(player.CurrentEnergy < 0.1) {
+				break;
+			}
+		}
+	}
+
+	public IEnumerator CheckEnergy() {
+		while(true) {
+			if(player.CurrentEnergy >= player.maxEnergy) {
+				GameObject laserObject;
+
+				laserObject = Instantiate(laserPrefab, transform.position, Quaternion.identity);
+				laserObject.transform.parent = transform;
+				laserObject.transform.rotation = transform.rotation;
+				StartCoroutine(Attack());
+
+			}
+			yield return null;
+		}
+	}
+/*
+ *  Old attack function
+ *
 	public void Attack(){
 		if(player.CurrentEnergy >= player.maxEnergy / 3){
 			int energy = (int)player.CurrentEnergy;
@@ -86,17 +111,17 @@ public class ShieldCtrl : MonoBehaviour {
 			switch(energy){
 				case 1:
 				bulletObject = Instantiate(bulletPrefab[0], transform.position, Quaternion.identity);
-				player.CurrentEnergy -= 1;
+				player.CurrentEnergy -= 1.0f;
 				break;
 
 				case 2:
 				bulletObject = Instantiate(bulletPrefab[1], transform.position, Quaternion.identity);
-				player.CurrentEnergy -= 2;
+				player.CurrentEnergy -= 2.0f;
 				break;
 
 				case 3:
 				bulletObject = Instantiate(bulletPrefab[2], transform.position, Quaternion.identity);
-				player.CurrentEnergy -= 3;
+				player.CurrentEnergy -= 3.0f;
 				break;
 
 				default:
@@ -108,10 +133,15 @@ public class ShieldCtrl : MonoBehaviour {
 		}
 		
 	}
-	
+*/	
 	void OnTriggerEnter2D(Collider2D coll) {
 		if(coll.gameObject.CompareTag("EnemyBullet")) {
-			player.CurrentEnergy += player.fillEnergyAmount;
+			float filledEnergy = player.CurrentEnergy + player.currentFillEnergyAmount;
+			if(filledEnergy > 3.0) {
+				player.CurrentEnergy = 3.0f;
+			} else {
+			player.CurrentEnergy = filledEnergy;
+			}
 			Destroy(coll.gameObject);
 		}
 	}

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameModes {Title, Playing, Paused, GameOver};
+public enum GameModes {Title, Playing, Paused, GameOver, Guide, Highscores, Credits};
 
 public class GameMgr : MonoBehaviour {
 	private static GameMgr instance;
@@ -33,7 +33,9 @@ public class GameMgr : MonoBehaviour {
 					player.SetActive(true);
 
 					if(prevGamemode == GameModes.Title){
+						StartCoroutine(FindObjectOfType<ShieldCtrl>().CheckEnergy());
 						StartCoroutine(StartSpawn());
+						StartCoroutine(StartSpawnItems());
 					}
 
 					StartCoroutine(StartScore());
@@ -44,16 +46,41 @@ public class GameMgr : MonoBehaviour {
 					UIMgr.Instance.PauseUI();
 					break;
 
+				case GameModes.Guide:
+					UIMgr.Instance.GuideUI();
+					break;
+
+				case GameModes.Highscores:
+					UIMgr.Instance.HighscoresUI();
+					break;
+
+				case GameModes.Credits:
+					UIMgr.Instance.CreditsUI();
+					break;
+			
 				case GameModes.GameOver:
 
+					if(PlayerPrefs.HasKey("GameScore")){
+						if(PlayerPrefs.GetInt("GameScore") < CurrentScore){
+							PlayerPrefs.SetInt("GameScore", CurrentScore);
+						}
+					}
+					else{
+						PlayerPrefs.SetInt("GameScore", CurrentScore);
+					}
+					
 					UIMgr.Instance.GameOverUI();
 					player.SetActive(false);
 					break;
 			}
 		}
 	}
-	public float spawnTime = 7;
-    public float initialspawnTime = 5;
+	public float spawnTime = 4;
+    public float initialspawnTime = 2;
+	
+	// Lifespan of items
+	public float itemLifeSpan = 7f;
+
 	private int currentScore = 0;
 	public int CurrentScore{
 		get{
@@ -68,6 +95,7 @@ public class GameMgr : MonoBehaviour {
 	public GameObject player;
 
 	private MonsterSpawner monSpawner;
+	private ItemSpawner ItemSpawner;
 
 	void Awake(){
 		if(instance == null){
@@ -81,9 +109,9 @@ public class GameMgr : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		monSpawner = GetComponent<MonsterSpawner>();
+		ItemSpawner = GetComponent<ItemSpawner>();
 
 		GameMgr.Instance.Gamemode = GameModes.Title;
-
 	}
 
 	// normal score increase
@@ -125,4 +153,24 @@ public class GameMgr : MonoBehaviour {
 		}
 	}
 
+	IEnumerator StartSpawnItems() {
+
+		while(true) {
+			if(gamemode == GameModes.Playing) {
+				int seconds = Random.Range(0, 5) + 4;
+				int mseconds = Random.Range(0, 100);
+				float itemSpawnTime = seconds + (float)mseconds / 100.0f;
+
+				yield return new WaitForSeconds(itemSpawnTime);
+
+				GameObject item = ItemSpawner.SpawnItem();
+				Destroy(item, itemLifeSpan);
+			} else if(gamemode == GameModes.Paused) {
+				yield return new WaitUntil(()=>gamemode == GameModes.Playing);
+			} else if(gamemode == GameModes.GameOver) {
+				break;
+			}
+
+		}
+	}
 }

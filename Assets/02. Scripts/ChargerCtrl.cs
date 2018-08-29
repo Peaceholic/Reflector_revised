@@ -10,6 +10,12 @@ public enum MonsterState {
     Attack //Do special action(ex: fire bullets, etc.)
 };
 
+public enum ChargerAttackType {
+    Direct,
+    Explosion,
+    Discharge
+};
+
 public class ChargerCtrl : MonoBehaviour {
 
 	public float currentSpeed = 5.0f;
@@ -18,37 +24,55 @@ public class ChargerCtrl : MonoBehaviour {
     public float patrolFrequency = 2f;
 	
 	public MonsterState currentState = MonsterState.Idle;
-    public Sprite sp;
+    public Sprite attackSp;
+    public Sprite patrolSp;
 
 	// attack radius of the monster
     public float attackDist = 10.0f;
     public float patrolDist = 3.0f;
     public float checkTime = 0.5f;
+    public float explosionTime = 1.0f;
+    public float dischargeTime = 3.0f;
+    public float bulletAttackSpeed = 5.0f;
+    public int dischargeAmt = 36;
 
 	private bool isDie = false;
     private bool isArrived = false;
+
+    public ChargerAttackType chargerAttackType;
 
     float currentPatrolTime;
     // Used when move state
     private Vector2 moveDestination;
     private SpriteRenderer spriteRenderer;
 	private Transform playerTr;
-
+    
     private float prevX;
     private float curX;
 
-    // Player die effect
+    // Charger die effect
     public GameObject dieEffect;
+
+    // Charger explosion attack effect
+    public GameObject explosionEffect;
+
+    // Charger discharge bullet
+    public GameObject bulletPrefab;
 
     // Use this for initialization
     private void Start () {
 
-		playerTr = GameObject.FindWithTag("Player").GetComponent<Transform>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-		// Starting to pursue player
-		StartCoroutine(this.CheckState());
-		StartCoroutine(this.DoAction());
+		var player = GameObject.FindWithTag("Player");
+        if(player != null) {
+		    playerTr = player.GetComponent<Transform>();
+        }
+
+        // Starting to pursue player
+        ChooseAttackStyle();
+        StartCoroutine(this.CheckState());
+        StartCoroutine(this.DoAction());
         currentState = MonsterState.Move;
         currentPatrolTime = patrolFrequency;
 
@@ -82,10 +106,8 @@ public class ChargerCtrl : MonoBehaviour {
     }
 
 	// Check current state every designated time
-	private  IEnumerator CheckState() {
-		while(!isDie) {
-			yield return new WaitForSeconds(checkFrequency);
-
+	private IEnumerator CheckState() {
+		while(!isDie && playerTr != null) {
             switch (currentState)
             {
                 case MonsterState.Idle:
@@ -114,12 +136,13 @@ public class ChargerCtrl : MonoBehaviour {
                 default:
                     break;
             }
+			yield return new WaitForSeconds(checkFrequency);
         }
     }
 
-    private  IEnumerator DoAction() {
+    private IEnumerator DoAction() {
 
-		while(!isDie){
+		while(!isDie && playerTr != null) {
 			switch(currentState) {
 				case MonsterState.Idle:
                     ActIdle();
@@ -148,12 +171,12 @@ public class ChargerCtrl : MonoBehaviour {
 		}
 	}
 
-    private  void ActIdle()
+    private void ActIdle()
     {
-        
+        ActPatrol();
     }
 
-    private  void ActMove()
+    private void ActMove()
     {
         MoveTo(playerTr.position);
         Vector2 pos = Camera.main.WorldToScreenPoint(transform.position);
@@ -163,13 +186,13 @@ public class ChargerCtrl : MonoBehaviour {
 
     }
 
-    private  void ActChase()
+    private void ActChase()
     {
         MoveTo(playerTr.position);
     }
 
  
-    private  void ActPatrol()
+    private void ActPatrol()
     {
         //Set MoveDestination
         currentPatrolTime += Time.deltaTime;
@@ -215,14 +238,72 @@ public class ChargerCtrl : MonoBehaviour {
         }
     }
 
-    private  void ActAttack()
+    private void ActAttack()
     {
-        spriteRenderer.sprite = sp;
-        transform.Translate(moveDestination.normalized * attackSpeed * Time.deltaTime);
-        StartCoroutine(DestroyOnOutOfScreen());
+        switch(chargerAttackType) {
+            case ChargerAttackType.Direct:
+            Direct();
+            break;
+
+            case ChargerAttackType.Explosion:
+            StartCoroutine(Explosion());
+            break;
+
+            case ChargerAttackType.Discharge:
+            StartCoroutine(Discharge());
+            currentState = MonsterState.Idle;
+            break;
+        }
     }
 
-    private  void MoveTo(Vector2 dest)
+    void Direct() {
+        spriteRenderer.sprite = attackSp;
+        transform.Translate(moveDestination.normalized * attackSpeed * Time.deltaTime);
+        StartCoroutine(DestroyOnOutOfScreen());
+	}
+
+    IEnumerator Explosion() {
+        spriteRenderer.sprite = attackSp;
+        yield return new WaitForSeconds(explosionTime);
+        currentSpeed = 4.5f;
+        MoveTo(playerTr.position);
+        yield return new WaitForSeconds(1.0f);
+        Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        Die();
+	}
+
+    IEnumerator Discharge() {
+
+        spriteRenderer.sprite = attackSp;
+        var temp = currentSpeed;
+        currentSpeed /= 3;
+
+        yield return new WaitForSeconds(dischargeTime);
+
+        int locDif = 360 / dischargeAmt;
+        int angle = 0;
+        for(int i=0 ; i<dischargeAmt ; i++) {
+            Vector2 attackDir = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            GameObject bulletObject = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * bulletAttackSpeed;
+
+            Destroy(bulletObject, 8); // May erase after optimization
+            angle += locDif;
+        }
+
+        spriteRenderer.sprite = patrolSp;
+        var restTime = 2.0f;
+        yield return new WaitForSeconds(restTime);
+
+        currentSpeed = temp;
+        currentState = MonsterState.Patrol;
+	}
+
+    void ChooseAttackStyle() {
+        chargerAttackType = (ChargerAttackType)Random.Range(0, System.Enum.GetValues(typeof(ChargerAttackType)).Length);
+    }
+
+    private void MoveTo(Vector2 dest)
     {
         Vector2 moveDir = (dest - (Vector2)transform.position).normalized;
         transform.Translate(moveDir * currentSpeed * Time.deltaTime);
@@ -230,7 +311,7 @@ public class ChargerCtrl : MonoBehaviour {
 
     public void Die()
     {
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 
 
