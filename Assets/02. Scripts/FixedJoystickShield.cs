@@ -8,7 +8,7 @@ public class FixedJoystickShield : JoystickShield {
     private Vector2 joystickPosition = Vector2.zero;
     private Camera cam = new Camera();
     private bool firstTouch = true;
-    private float magnitudeMultiplier = 2.5f;
+    private float magnitudeMultiplier = 0.3f;
 
     void Start() {
         joystickPosition = RectTransformUtility.WorldToScreenPoint(cam, background.position);

@@ -102,7 +102,7 @@ MonoBehaviour:
   explosionTime: 1
   dischargeTime: 1
   bulletAttackSpeed: 5
-  dischargeAmt: 36
+  dischargeAmt: 24
   chargerAttackType: 0
   dieEffect: {fileID: 1475765197828686, guid: ec93efdfa70874b01bff16ed6225f629, type: 2}
   explosionEffect: {fileID: 1261696716759420, guid: 9efdeb4a5afdc8b4587484384d331fb3,
