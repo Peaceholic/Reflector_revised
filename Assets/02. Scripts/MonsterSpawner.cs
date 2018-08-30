@@ -9,12 +9,13 @@ public class MonsterSpawner : MonoBehaviour {
 	
 	// Counts number of chargers after shooter has spawned
 	private int chargerCount = 0;
+	private int shooterCount = 0;
 
 	public void SpawnMonster() {
 		int r = Random.Range(0, 2);
 		if((chargerCount >= 2) || (r == 0)) {
 			SpawnShooter();
-		} else if(r == 1) {
+		} else if((r == 1) || (chargerCount >= 2)) {
 			SpawnCharger();
 		}
 	}
@@ -23,6 +24,7 @@ public class MonsterSpawner : MonoBehaviour {
 		
 		// Reset charger count
 		chargerCount = 0;
+		shooterCount += 1;
 
 		Vector3 screenPointPos = new Vector3(0, 0, 0);
 
@@ -48,6 +50,7 @@ public class MonsterSpawner : MonoBehaviour {
 
 		// Add 1 to charger counter
 		chargerCount += 1;
+		shooterCount = 0;
 
 		Vector3 screenPointPos = new Vector3(0, 0, 0);
 

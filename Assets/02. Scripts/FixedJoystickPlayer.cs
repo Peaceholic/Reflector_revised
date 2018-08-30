@@ -8,7 +8,7 @@ public class FixedJoystickPlayer : JoystickPlayer {
     private Camera cam = new Camera();
 
     private bool firstTouch = true;
-    private float magnitudeMultiplier = 0.3f;
+    public float magnitudeMultiplier = 0.3f;
 
     void Start() { 
         joystickPosition = RectTransformUtility.WorldToScreenPoint(cam, background.position);

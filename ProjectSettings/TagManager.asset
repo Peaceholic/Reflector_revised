@@ -22,8 +22,8 @@ TagManager:
   - 
   - 
   - Background
-  - Laser
   - Shield
+  - Laser
   - 
   - 
   - 
@@ -52,9 +52,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Shield
-    uniqueID: 3373415343
-    locked: 0
   - name: Laser
     uniqueID: 463142201
+    locked: 0
+  - name: Shield
+    uniqueID: 3373415343
     locked: 0
