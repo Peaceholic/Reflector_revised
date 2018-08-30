@@ -169,10 +169,12 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	public IEnumerator ApplyImmune(float immuneDuration){
+		spriteRenderer.color = new Color(1, 1, 1, 0.5f);
 		StartCoroutine(setBlinkEffect(immuneDuration));
 		immune = true;
 		yield return new WaitForSeconds(immuneDuration);
 		immune = false;
+		spriteRenderer.color = new Color(1, 1, 1, 1);
 	}
 	
 	public IEnumerator ApplyGaugeMult(float gaugeMultiplier, float gaugeMultDuration){
