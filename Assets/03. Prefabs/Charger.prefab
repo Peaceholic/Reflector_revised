@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b09efe59d31b84e8079b3809a08357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentSpeed: 5
-  attackSpeed: 6.5
+  currentSpeed: 1
+  attackSpeed: 2
   checkFrequency: 0.1
   patrolFrequency: 2
   currentState: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   patrolDist: 3
   checkTime: 0.5
   explosionTime: 1
+  explosionAttackSpeed: 4
   dischargeTime: 1
   bulletAttackSpeed: 5
   dischargeAmt: 24

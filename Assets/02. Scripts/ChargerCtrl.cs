@@ -32,6 +32,7 @@ public class ChargerCtrl : MonoBehaviour {
     public float patrolDist = 3.0f;
     public float checkTime = 0.5f;
     public float explosionTime = 1.0f;
+    public float explosionAttackSpeed = 4.0f;
     public float dischargeTime = 3.0f;
     public float bulletAttackSpeed = 5.0f;
     public int dischargeAmt = 36;
@@ -265,7 +266,7 @@ public class ChargerCtrl : MonoBehaviour {
     IEnumerator Explosion() {
         spriteRenderer.sprite = attackSp;
         yield return new WaitForSeconds(explosionTime);
-        currentSpeed = 4.0f;
+        currentSpeed = explosionAttackSpeed;
         if(playerTr != null) {
             MoveTo(playerTr.position);
         }
