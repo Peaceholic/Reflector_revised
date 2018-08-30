@@ -1536,6 +1536,7 @@ GameObject:
   m_Component:
   - component: {fileID: 435474973}
   - component: {fileID: 435474972}
+  - component: {fileID: 435474974}
   m_Layer: 0
   m_Name: TopCollider
   m_TagString: OutOfScreenCollider
@@ -1581,6 +1582,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &435474974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 435474971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 532fe4ffb29e55f49b9c94bb82f57e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &480263066
 GameObject:
   m_ObjectHideFlags: 0
@@ -2030,6 +2042,7 @@ GameObject:
   m_Component:
   - component: {fileID: 667123000}
   - component: {fileID: 667122999}
+  - component: {fileID: 667123001}
   m_Layer: 0
   m_Name: BottomCollider
   m_TagString: OutOfScreenCollider
@@ -2075,6 +2088,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &667123001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 667122998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 532fe4ffb29e55f49b9c94bb82f57e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &686644626
 GameObject:
   m_ObjectHideFlags: 0
@@ -2172,6 +2196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 735113515}
   - component: {fileID: 735113514}
+  - component: {fileID: 735113516}
   m_Layer: 0
   m_Name: RightCollider
   m_TagString: OutOfScreenCollider
@@ -2217,6 +2242,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &735113516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 735113513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 532fe4ffb29e55f49b9c94bb82f57e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &735390792
 GameObject:
   m_ObjectHideFlags: 0
@@ -2470,6 +2506,7 @@ GameObject:
   m_Component:
   - component: {fileID: 823273122}
   - component: {fileID: 823273121}
+  - component: {fileID: 823273123}
   m_Layer: 0
   m_Name: LeftCollider
   m_TagString: OutOfScreenCollider
@@ -2515,6 +2552,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &823273123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 823273120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 532fe4ffb29e55f49b9c94bb82f57e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &871793425
 GameObject:
   m_ObjectHideFlags: 0
