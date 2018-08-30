@@ -10,6 +10,7 @@ TagManager:
   - Charger
   - Shooter
   - Item
+  - ChargerExplosion
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - 
   - 
   - Background
-  - 
-  - 
+  - Laser
+  - Shield
   - 
   - 
   - 
@@ -49,4 +50,10 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Shield
+    uniqueID: 3373415343
+    locked: 0
+  - name: Laser
+    uniqueID: 463142201
     locked: 0

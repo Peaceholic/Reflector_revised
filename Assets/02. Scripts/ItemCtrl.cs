@@ -12,8 +12,8 @@ public class ItemCtrl : MonoBehaviour {
 	public ItemType itemType;
 
 	// Duration(in usage) of items
-	public float immuneDuration = 5.0f;
-	public float gaugeMultDuration = 5.0f;
+	public float immuneDuration = 8.0f;
+	public float gaugeMultDuration = 6.0f;
 
 	// Multiplier for gauge fill amount
 	public float gaugeMultiplier = 2.0f;
@@ -49,13 +49,5 @@ public class ItemCtrl : MonoBehaviour {
 			break;
 		}
 		Destroy(this.gameObject);
-	}
-
-	private IEnumerator ApplyGaugeMult(PlayerCtrl player){
-		float originalFillAmount = player.fillEnergyAmount;
-		float multipliedFillAmount = originalFillAmount * gaugeMultiplier;
-		player.SetFillMult(multipliedFillAmount);
-		yield return new WaitForSeconds(gaugeMultDuration);
-		player.SetFillMult(originalFillAmount);
 	}
 }

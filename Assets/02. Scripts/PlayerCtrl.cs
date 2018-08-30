@@ -50,6 +50,8 @@ public class PlayerCtrl : MonoBehaviour {
 	public bool isDead;
 	[HideInInspector]
 	public bool immune;
+	[HideInInspector]
+	public bool isHit;
 	public bool multiplied;
 	public int maxHealth = 2;
 	public float maxEnergy = 3.0f;
@@ -61,6 +63,7 @@ public class PlayerCtrl : MonoBehaviour {
 	public GameObject deathEffect;
 
 	private JoystickPlayer joystick;
+	private static Coroutine effect;
 
 	void Start()
 	{
@@ -70,6 +73,7 @@ public class PlayerCtrl : MonoBehaviour {
 		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		prevX = transform.position.x;
 		isDead = false;
+		isHit = false;
 		immune = false;
 		multiplied = false;
 	}
@@ -143,9 +147,10 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	public void ReceiveDamage(int amount){
-		if(immune) {
+		if(immune || isHit) {
 			return;
 		}
+		StartCoroutine(ImmuneOnDamage(3.0f));
 		CurrentHealth -= amount;
 		
 	}
@@ -164,9 +169,12 @@ public class PlayerCtrl : MonoBehaviour {
 	}
 
 	public IEnumerator ApplyImmune(float immuneDuration){
+		spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+		StartCoroutine(setBlinkEffect(immuneDuration));
 		immune = true;
 		yield return new WaitForSeconds(immuneDuration);
 		immune = false;
+		spriteRenderer.color = new Color(1, 1, 1, 1);
 	}
 	
 	public IEnumerator ApplyGaugeMult(float gaugeMultiplier, float gaugeMultDuration){
@@ -191,5 +199,29 @@ public class PlayerCtrl : MonoBehaviour {
 		} else {
 			CurrentHealth = tempHealth;
 		}
+	}
+
+	IEnumerator setBlinkEffect(float duration) {
+		float r = ((float)Random.Range(0, 2) + 5.0f) / 10.0f;
+		if(immune == true) {
+			StopCoroutine(effect);
+		}
+		effect = StartCoroutine(ShooterEffect.UnBeatTime(spriteRenderer, 0.3f));
+		yield return new WaitForSeconds(duration * r);
+		StopCoroutine(effect);
+		effect = StartCoroutine(ShooterEffect.UnBeatTime(spriteRenderer, 3.0f));
+		yield return new WaitForSeconds(duration * (1 - r));
+		StopCoroutine(effect);
+		ShooterEffect.SetToNormal(spriteRenderer);
+	}
+
+	IEnumerator ImmuneOnDamage(float duration) {
+
+		spriteRenderer.color = Color.gray;
+		StartCoroutine(setBlinkEffect(duration));
+		isHit = true;
+		yield return new WaitForSeconds(duration);
+		isHit = false;
+		spriteRenderer.color = new Color(1.0f , 1.0f , 1.0f);
 	}
 }
