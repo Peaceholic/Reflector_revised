@@ -70,7 +70,7 @@ public class BulletCtrl : MonoBehaviour {
 			Destroy(other.gameObject);
 			Instantiate(DieEffect, otherTr.position, Quaternion.identity);
 		} else if(other.gameObject.tag == "EnemyBullet") {
-			Destroy(other.gameObject);
+			ObjectPool.Instance.DestroyObject(other.gameObject);
 		}
 	}
 }

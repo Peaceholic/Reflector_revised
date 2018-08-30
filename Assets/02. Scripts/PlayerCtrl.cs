@@ -100,7 +100,7 @@ public class PlayerCtrl : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
 		if(other.gameObject.CompareTag("EnemyBullet") && !isDead) {
 			ReceiveDamage(1);
-			Destroy(other.gameObject);
+			ObjectPool.Instance.DestroyObject(other.gameObject);
 		} else if(other.gameObject.CompareTag("Charger") && !isDead) {
 			ReceiveDamage(CurrentHealth);
 		} else if(other.gameObject.CompareTag("Shooter") && !isDead) {
