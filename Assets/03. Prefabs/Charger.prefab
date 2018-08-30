@@ -90,13 +90,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSpeed: 5
-  attackSpeed: 7
+  attackSpeed: 6.5
   checkFrequency: 0.1
   patrolFrequency: 2
   currentState: 0
   attackSp: {fileID: 21300002, guid: 82300fce3b3058b40976e33e24ba7f57, type: 3}
   patrolSp: {fileID: 21300000, guid: 82300fce3b3058b40976e33e24ba7f57, type: 3}
-  attackDist: 10
+  attackDist: 7.5
   patrolDist: 3
   checkTime: 0.5
   explosionTime: 1

@@ -119,7 +119,7 @@ public class ChargerCtrl : MonoBehaviour {
                 case MonsterState.Patrol:
                     Vector3 playerDist = playerTr.position - transform.position;
                     const float recogDistX = 2.0f;
-                    const float recogDistY = 1.0f;
+                    const float recogDistY = 1.5f;
 
                     Vector2 dist = new Vector2(Mathf.Pow(playerDist.x, 2) / Mathf.Pow(recogDistX, 2), Mathf.Pow(playerDist.y, 2) / Mathf.Pow(recogDistY, 2));
 
@@ -265,7 +265,7 @@ public class ChargerCtrl : MonoBehaviour {
     IEnumerator Explosion() {
         spriteRenderer.sprite = attackSp;
         yield return new WaitForSeconds(explosionTime);
-        currentSpeed = 4.5f;
+        currentSpeed = 4.0f;
         if(playerTr != null) {
             MoveTo(playerTr.position);
         }
