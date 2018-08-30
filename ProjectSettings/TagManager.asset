@@ -11,6 +11,7 @@ TagManager:
   - Shooter
   - Item
   - ChargerExplosion
+  - OutOfScreenCollider
   layers:
   - Default
   - TransparentFX

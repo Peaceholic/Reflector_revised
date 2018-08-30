@@ -289,7 +289,6 @@ public class ChargerCtrl : MonoBehaviour {
             GameObject bulletObject = ObjectPool.Instance.CreateObject(0, transform.position, Quaternion.identity);
             bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * bulletAttackSpeed;
 
-            ObjectPool.Instance.DestroyObject(bulletObject, 8);
             angle += locDif;
         }
 

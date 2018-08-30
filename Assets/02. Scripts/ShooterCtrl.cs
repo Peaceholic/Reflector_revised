@@ -162,7 +162,6 @@ public class ShooterCtrl : MonoBehaviour {
             attackDir.Normalize();
             bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * directAttackSpeed;
 
-            ObjectPool.Instance.DestroyObject(bulletObject, 8);
             yield return new WaitForSeconds(directAttackFrequency);
         }
 	}
@@ -180,7 +179,6 @@ public class ShooterCtrl : MonoBehaviour {
             attackDir.Normalize();
             bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * directAttackSpeed;
 
-            ObjectPool.Instance.DestroyObject(bulletObject, 8);
             yield return new WaitForSeconds(directAttackFrequency);
         }
 	}
@@ -203,8 +201,6 @@ public class ShooterCtrl : MonoBehaviour {
                     attackDir.y -= 1;
                     bulletObject.GetComponent<Rigidbody2D>().velocity = attackDir * consecutiveAttackSpeed;
                 }
-
-                ObjectPool.Instance.DestroyObject(bulletObject, 8);
 
                 yield return new WaitForSeconds(0.06f);
 
@@ -236,7 +232,6 @@ public class ShooterCtrl : MonoBehaviour {
                     dir.x += 1.4f;
                 }
 
-                ObjectPool.Instance.DestroyObject(bulletObject[i], 8);
             }
             
 			yield return new WaitForSeconds(sixwaysAttackFrequency);

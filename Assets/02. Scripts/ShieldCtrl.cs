@@ -77,7 +77,7 @@ public class ShieldCtrl : MonoBehaviour {
 	IEnumerator Attack() {
 		while(true) {
 			player.CurrentEnergy -= player.energyUseRate;
-			yield return new WaitForSeconds(0.1f);
+			yield return new WaitForSeconds(0.05f);
 
 			if(player.CurrentEnergy < 0.1) {
 				break;
@@ -140,7 +140,7 @@ public class ShieldCtrl : MonoBehaviour {
 			if(filledEnergy > 3.0) {
 				player.CurrentEnergy = 3.0f;
 			} else {
-			player.CurrentEnergy = filledEnergy;
+				player.CurrentEnergy = filledEnergy;
 			}
 			ObjectPool.Instance.DestroyObject(coll.gameObject);
 		}
