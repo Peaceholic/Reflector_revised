@@ -1,2 +1,3 @@
 # reflector-unity
-Android Shoot & Reflecting arcade game for 2018-1 Line Plus game making contest.
+This is codes for Android Shoot & Reflecting arcade game, "Reflector".  
+Reflector is submitted to 2018-1 Line Plus game making contest.
